@@ -1,0 +1,422 @@
+<form action=""
+	  {ife 'globonus.level' $level}action="" method="post"{/if}  class="form-horizontal form-validate" enctype="multipart/form-data">
+<input type="hidden" name="id" value="{$level['id']}"/>
+<input type="hidden" name="r" value="globonus.level.{if empty($level['id'])}add{else}edit{/if}"/>
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button data-dismiss="modal" class="close" type="button">×</button>
+			<h4 class="modal-title">{if !empty($level['id'])}编辑{else}添加{/if}分销商等级</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label class="col-sm-2 control-label must">等级名称</label>
+				<div class="col-sm-9 col-xs-12">
+					{ife 'globonus.level' $level}
+					<input type="text" name="levelname" class="form-control" value="{$level['levelname']}"
+						   data-rule-required='true'/>
+					{else}
+					<div class='form-control-static'>{$level['levelname']}</div>
+					{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label must">权重</label>
+				<div class="col-sm-9 col-xs-12">
+					{ife 'globonus.level' $level}
+					<div class='input-group'>
+						<input type="number" name="weight" class="form-control" value="{$level['weight']}" {if $level['weight']==1}disabled="disabled"{/if} min="2" max="100000"/>
+						<div class='input-group-addon'>填写正整数且不得重复</div>
+					</div>
+					{else}
+					<div class='form-control-static'>{$level['weight']}</div>
+					{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label must">分红比例</label>
+				<div class="col-sm-9 col-xs-12">
+					{ife 'globonus.level' $level}
+					<div class='input-group'>
+						<input type="text" name="bonus" class="form-control" value="{$level['bonus']}"/>
+						<div class='input-group-addon'>%</div>
+					</div>
+					{else}
+					<div class='form-control-static'>{$level['bonus']}</div>
+					{/if}
+				</div>
+			</div>
+			{if $level['id']!='default'}
+			<div class="form-group">
+				<label class="col-lg control-label">分销等级说明链接</label>
+				<div class="col-sm-9 col-xs-12">
+					<label class="radio radio-inline" style="width:240px">
+						<input class="levelcondition" type="radio" name="levelcondition" value="1" {if $data['levelcondition']=1}checked{/if}/>
+						满足其中一个
+					</label>
+					<label class="radio radio-inline" style="width:240px">
+						<input class="levelcondition" type="radio" name="levelcondition" value="2" {if $data['levelcondition']=2}checked{/if}/>
+						同时满足多个条件
+					</label>
+				</div>
+			</div>
+
+			<!--多条件组合-->
+			<div class="form-group form-group-level">
+				<label class="col-lg control-label">分销商等级升级依据</label>
+				<div class="col-sm-9 col-xs-12  iiinput">
+					{ifp 'globonusn.set.edit'}
+					<div style="background: #f5f7f9;width: 520px;padding: 10px;">
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="0" {if in_array('0',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							分销订单总额(完成的订单)
+						</label>
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="1" {if in_array('1',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							一级分销订单金额(完成的订单)
+						</label>
+						<br/>
+
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="2" {if in_array('2',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							分销订单总数(完成的订单)
+						</label>
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="3" {if in_array('3',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							一级分销订单总数(完成的订单)
+						</label>
+					</div>
+
+
+					<div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="4" {if in_array('4',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							自购订单金额(完成的订单)
+						</label>
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="5" {if in_array('5',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							自购订单数量(完成的订单)
+						</label>
+					</div>
+
+
+					<div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="6" {if in_array('6',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							下线总人数（分销商+非分销商）
+						</label>
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="7" {if in_array('7',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							一级下线人数（分销商+非分销商）
+						</label>
+						<br/>
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="8" {if in_array('8',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							下级分销商总人数
+						</label>
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="9" {if in_array('9',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							一级分销商人数
+						</label>
+					</div>
+
+					<div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="10" {if in_array('10',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							已提现佣金总金额
+						</label>
+					</div>
+
+					<div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+						<label class="radio radio-inline" style="width:240px">
+							<input type="checkbox" name="leveltypes[]" value="11" {if in_array('11',iunserializer($data['leveltypes_json']))}checked{/if}/>
+							已发放分红总金额
+						</label>
+					</div>
+
+					{else}
+					{if empty($data['leveltype'])}{/if}
+					{if $data['leveltype']==1}分销订单总额(完成的订单){/if}
+					{if $data['leveltype']==2}一级分销订单金额(完成的订单){/if}
+					{if $data['leveltype']==3}一级分销订单总数(完成的订单){/if}
+					{if $data['leveltype']==4}自购订单金额(完成的订单){/if}
+					{if $data['leveltype']==5}自购订单数量(完成的订单){/if}
+					{if $data['leveltype']==6}下线总人数（分销商+非分销商）{/if}
+					{if $data['leveltype']==7}一级下线人数（分销商+非分销商）{/if}
+					{if $data['leveltype']==8}下级分销商总人数{/if}
+					{if $data['leveltype']==9}一级分销商人数{/if}
+					{if $data['leveltype']==10}已提现佣金总金额{/if}
+					{if $data['leveltype']==11}已发放分红总金额{/if}
+					{/if}
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">升级条件</label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+                        <span style="padding-top:6px;" class='help-block'>
+							 {if $data['levelcondition']==1}【满足其中一个】
+							{else if $data['levelcondition']==2}【同时满足多个条件】
+							{else}【满足以下条件】{/if}
+                        </span>
+					</div>
+				</div>
+			</div>
+			{ife 'globonus.level' $level}
+
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>分销订单金额满</span>
+						<input type="text" name="ordermoney" class="form-control" value="{$level['ordermoney']}"/>
+						<span class='input-group-addon'>元</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>一级分销订单金额满</span>
+						<input type="text" name="ordermoney1" class="form-control" value="{$level['ordermoney1']}"/>
+						<span class='input-group-addon'>元</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>分销订单数量满</span>
+						<input type="text" name="ordercount" class="form-control"
+							   value="{$level['ordercount']}"/>
+						<span class='input-group-addon'>个</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>一级分销订单数量满</span>
+						<input type="text" name="ordercount1" class="form-control"
+							   value="{$level['ordercount1']}"/>
+						<span class='input-group-addon'>个</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>自购订单金额满</span>
+						<input type="text" name="ordermoney2" class="form-control"
+							   value="{$level['ordermoney2']}"/>
+						<span class='input-group-addon'>元</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>自购订单数量满</span>
+						<input type="text" name="ordercount2" class="form-control"
+							   value="{$level['ordercount2']}"/>
+						<span class='input-group-addon'>个</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>下级总人数满</span>
+						<input type="text" name="downcount" class="form-control"
+							   value="{$level['downcount']}"/>
+						<span class='input-group-addon'>个（分销商+非分销商）</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>一级下级人数满</span>
+						<input type="text" name="downcount1" class="form-control"
+							   value="{$level['downcount1']}"/>
+						<span class='input-group-addon'>个（分销商+非分销商）</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>团队总人数满</span>
+						<input type="text" name="teamcount" class="form-control"
+							   value="{$level['teamcount']}"/>
+						<span class='input-group-addon'>个（分销商）</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>一级团队人数满</span>
+						<input type="text" name="teamcount1" class="form-control"
+							   value="{$level['teamcount1']}"/>
+						<span class='input-group-addon'>个（分销商）</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>已提现佣金总金额满</span>
+						<input type="text" name="commissionmoney"
+							   class="form-control"
+							   value="{$level['commissionmoney']}"/>
+						<span class='input-group-addon'>元</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group dispp">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='input-group-addon'>已发放分红总金额满</span>
+						<input type="text" name="bonusmoney"
+							   class="form-control"
+							   value="{$level['bonusmoney']}"/>
+						<span class='input-group-addon'>元</span>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<div class='input-group'>
+						<span class='help-block'>股东分红升级条件，不填写默认为不自动升级</span>
+
+					</div>
+				</div>
+			</div>
+
+
+			{else}
+
+			{if in_array(0,$leveltype)}
+			分销订单金额满 {$level['ordermoney']} 元
+			{/if}
+
+			{if in_array(1,$leveltype)}
+			一级分销订单金额满 {$level['ordermoney1']} 元
+			{/if}
+			{if in_array(2,$leveltype)}
+			分销订单数量满 {$level['ordercount']} 个
+			{/if}
+
+			{if in_array(3,$leveltype)}
+			一级分销订单数量满 {$level['ordercount']} 个
+			{/if}
+
+			{if in_array(4,$leveltype)}
+			自购订单金额满 {$level['ordermoney']} 元
+			{/if}
+
+			{if in_array(5,$leveltype)}
+			自购订单数量满 {$level['ordercount']} 个
+			{/if}
+			{if in_array(6,$leveltype)}
+			下级总人数满 {$level['downcount']} 个（分销商+非分销商）
+
+			{/if}
+			{if in_array(7,$leveltype)}
+			一级下级人数满 {$level['downcount']} 个（分销商+非分销商）
+
+			{/if}
+			{if in_array(8,$leveltype)}
+			团队总人数满 {$level['downcount']} 个（分销商）
+			{/if}
+			{if in_array(9,$leveltype)}
+			一级团队人数满 {$level['downcount']} 个（分销商）
+			{/if}
+
+			{if in_array(10,$leveltype)}
+			已提现佣金总金额满 {$level['commissionmoney']} 元
+			{/if}
+
+			{if in_array(11,$leveltype)}
+			已发放分红总金额满满 {$level['bonusmoney']} 元
+			{/if}
+
+			{/if}
+		</div>
+	</div>
+	{/if}
+
+	<script>
+        var $inputt = $('.iiinput input');
+        var $dispp = $('.dispp');
+        for(var i=0; i<$inputt.length;i++){
+            var ind = parseInt($($inputt[i]).val());
+            // $($dispp[index]).css('display','block');
+            var a = $($inputt[i]).prop('checked');
+            if(a){
+
+                $($dispp[ind]).css('display','block');
+            }else{
+
+                $($dispp[ind]).css('display','none');
+            }
+        };
+        $('.levelcondition').on('change', function (e) {
+            // var box = $('.form-group-level');
+            // var index = e.currentTarget.defaultValue
+            // index > 0 ? (box.eq(1).css('display', 'block'), box.eq(0).css('display', 'none')) : (box.eq(0).css('display', 'block'), box.eq(1).css('display', 'none'))
+        })
+        $('.iiinput').on('click','input', function (e) {
+            var box = $('.form-group');
+            // var $dispp = $('.dispp')
+            var index = parseInt($(this).val());
+            var a = $(this).prop('checked');
+            //console.log($($dispp[index]).text())
+            if(a){
+
+                $($dispp[index]).css('display','block');
+            }else{
+
+                $($dispp[index]).css('display','none');
+            }
+
+        })
+	</script>
+
+
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="submit">提交</button>
+		<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+	</div>
+</div>
+</form>
+

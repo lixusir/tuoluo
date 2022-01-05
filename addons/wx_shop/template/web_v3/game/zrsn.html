@@ -1,0 +1,129 @@
+{template '_header'}
+
+<div class="page-header">当前位置：<span class="text-primary">昨日神鸟记录</span></div>
+
+<div class="page-content">
+
+    <form action="./index.php" method="get" class="form-horizontal table-search" role="form" id="form1">
+
+        <input type="hidden" name="c" value="site" />
+
+        <input type="hidden" name="a" value="entry" />
+
+        <input type="hidden" name="m" value="wx_shop" />
+
+        <input type="hidden" name="do" value="web" />
+
+        <input type="hidden" name="r" value="game.credit_red" />
+
+
+    </form>
+
+
+
+    {if empty($list)}
+
+    <div class="panel panel-default">
+
+        <div class="panel-body empty-data">未查询到相关数据</div>
+
+    </div>
+
+    {else}
+
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <table class="table">
+
+                <thead class="navbar-inner">
+
+                <tr>
+
+                    <th style='width:280px;'></th>
+
+
+                    <th style='width:280px;'>id</th>
+
+
+                    <th style='width:280px;'>神鸟数量</th>
+
+                    <td style='width:550px;'>神鸟用户</th>
+
+                    <th style='width:200px;'>时间</th>
+
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {loop $list $row}
+
+                <tr>
+
+                    <td></td>
+
+
+                    <td>
+                        {$row['id']}
+                    </td>
+
+                    <td>
+
+                        {$row['num']}
+
+                    </td>
+
+                    <td>{$row['mema']}
+                    </td>
+
+                    <td>{$row['timea']}</td>
+
+
+                </tr>
+
+                {/loop}
+
+                </tbody>
+
+                <tfoot>
+
+                <tr>
+
+                    <td colspan="4">
+
+                        <div class="btn-group"></div>
+
+                    </td>
+
+                    <td colspan="5" style="text-align: right">
+
+                        <span class="pull-right" style="line-height: 28px;">(共{php echo count($list)}条记录)</span>
+
+                        {$pager}
+
+                    </td>
+
+                </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {/if}
+
+</div>
+
+
+
+{template '_footer'}
+

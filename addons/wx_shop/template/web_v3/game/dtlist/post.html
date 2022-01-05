@@ -1,0 +1,183 @@
+{template '_header'}
+
+<div class="page-header">
+    当前位置：<span class="text-primary">{if !empty($goods['id'])}编辑{else}添加{/if}答题题目{if !empty($goods['id'])}({$goods['tm']}){/if}</span>
+</div>
+
+<div class="page-content">
+    <div class="page-sub-toolbar">
+        <span class=''>
+            {ifp 'game.dtlist.add'}
+                <a class="btn btn-primary btn-sm" href="{php echo webUrl('game/dtlist/add')}">添加答题题目</a>
+            {/if}
+        </span>
+    </div>
+    <form {ife 'game.dtlist.add' $goods}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$goods['id']}" />
+
+            <!--答题题目信息-->
+            <div class="region-goods-details row">
+
+                <div class="region-goods-right col-sm-10">
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label must">答题题目名称</label>
+                {ife 'game.dtlist.add' $goods}
+                <div class="col-sm-7"  style="padding-right:0;" >
+                    <input type="text" name="tm" id="tm" class="form-control" value="{$goods['tm']}" data-rule-required="true" />
+                </div>
+                {else}
+                <div class='form-control-static'>{$goods['tm']}</div>
+                {/if}
+            </div>
+        
+         <div class="form-group">
+                <label class="col-sm-2 control-label must">答题题目解释</label>
+                {ife 'game.dtlist.add' $goods}
+                <div class="col-sm-7"  style="padding-right:0;" >
+                    <input type="text" name="tmjx" id="tmjx" class="form-control" value="{$goods['tmjx']}" data-rule-required="true" />
+                </div>
+                {else}
+                <div class='form-control-static'>{$goods['tmjx']}</div>
+                {/if}
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label">关卡</label>
+
+                <div class="col-sm-9 col-xs-12">
+
+                    {ife 'goods' $goods}
+
+                    <label class="radio-inline"><input type="radio" name="type" value="0"  {if empty($goods['type'])}checked="true"{/if}/> 关卡1</label>
+
+                    <label class="radio-inline"><input type="radio" name="type" value="1"  {if $goods['type'] == 1}checked="true"{/if}   />关卡2</label>
+
+                    <span class="help-block">关卡</span>
+
+                    {else}
+
+                    <div class='form-control-static'>
+                    {if $goods['type'] == 0}关卡1
+                    {elseif $goods['type'] == 1}关卡2
+
+                    {/if}</div>
+
+                    {/if}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label">正确答案设置</label>
+
+                <div class="col-sm-9 col-xs-12">
+
+                    {ife 'goods' $goods}
+
+                    <label class="radio-inline"><input type="radio" name="abcd" value="0"  {if empty($goods['abcd'])}checked="true"{/if}/> 选项A</label>
+
+                    <label class="radio-inline"><input type="radio" name="abcd" value="1"  {if $goods['abcd'] == 1}checked="true"{/if}   /> 选项B</label>
+
+                    <label class="radio-inline"><input type="radio" name="abcd" value="2"  {if $goods['abcd'] == 2}checked="true"{/if}   /> 选项C</label>
+                    <label class="radio-inline"><input type="radio" name="abcd" value="3"  {if $goods['abcd'] == 3}checked="true"{/if}   /> 选项D</label>
+
+                    <span class="help-block">正确答案</span>
+
+                    {else}
+
+                    <div class='form-control-static'>
+                    {if $goods['abcd'] == 0}选项A
+                    {elseif $goods['abcd'] == 1}选项B
+                    {elseif $goods['abcd'] == 2}选项C
+                    {elseif $goods['abcd'] == 3}选项D
+
+                    {/if}</div>
+
+                    {/if}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label">选项A题目</label>
+            <div class="col-sm-9">
+                {ife 'game.dtlist.add' $goods}
+                    <input type="text" name="a_w" id="a_w" class="form-control" value="{$goods['a_w']}" />
+                <span class='help-block'>题目设置!</span>
+
+                {else}
+                <div class='form-control-static'>选项A题目{$goods['a_w']} </div>
+                {/if}
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label">选项B题目</label>
+            <div class="col-sm-9">
+                {ife 'game.dtlist.add' $goods}
+                    <input type="text" name="b_w" id="b_w" class="form-control" value="{$goods['b_w']}" />
+                <span class='help-block'>题目设置!</span>
+
+                {else}
+                <div class='form-control-static'>选项B题目{$goods['b_w']} </div>
+                {/if}
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label">选项C题目</label>
+            <div class="col-sm-9 ">
+                {ife 'game.dtlist.add' $goods}
+                    <input type="text" name="c_w" id="c_w" class="form-control" value="{$goods['c_w']}" />
+                <span class='help-block'>题目设置!</span>
+
+                {else}
+                <div class='form-control-static'>选项C题目{$goods['c_w']} </div>
+                {/if}
+            </div>
+            </div>
+
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label">选项D题目</label>
+            <div class="col-sm-9">
+                {ife 'game.dtlist.add' $goods}
+                    <input type="text" name="d_w" id="d_w" class="form-control" value="{$goods['d_w']}" />
+                <span class='help-block'>题目设置!</span>
+
+                {else}
+                <div class='form-control-static'>选项D题目{$goods['d_w']} </div>
+                {/if}
+            </div>
+            </div>
+
+
+            
+
+
+            </div>
+        </div>
+        
+        <div class="form-group"></div>
+        <div class="form-group">
+            <label class="col-lg control-label"></label>
+            <div class="col-sm-9 col-xs-12">
+                {ife 'game.dtlist' $goods}
+                    <input type="submit" value="提交" class="btn btn-primary"  />
+                {/if}
+                <input type="button" name="back" onclick='history.back()' {ifp 'game.dtlist.add|game.dtlist.edit'}style='margin-left:10px;'{/if} value="返回列表" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+
+</div>
+{template '_footer'}
+

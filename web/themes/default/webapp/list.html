@@ -1,0 +1,73 @@
+{template 'common/header'}
+<div class="panel panel-cut" id="js-account-display" ng-controller="AccountDisplay">
+	<div class="panel-heading">
+		<span class="panel-heading-left"><i class="wi wi-wechat" style="font-size: 24px; margin-right: 10px; vertical-align:middle;"></i>请选择您要操作的PC</span>
+		<div class="font-default pull-right">
+			{if !empty($account_info['webapp_limit']) || $_W['isfounder'] && !user_is_vice_founder()}
+			<a href="./index.php?c=webapp&a=manage&do=create_display" class="color-default"><i class="fa fa-plus"></i>新增PC</a>
+			{/if}
+			{if $state == ACCOUNT_MANAGE_NAME_FOUNDER || $state == ACCOUNT_MANAGE_NAME_MANAGER}
+			<a href="{php echo url('account/manage', array('account_type' => ACCOUNT_TYPE_WEBAPP_NORMAL))}" class="color-default"><i class="wi wi-wechatstatistics"></i>PC管理</a>
+			{/if}
+		</div>
+	</div>
+	<div class="panel-body" >
+		{if !$_W['isfounder'] && !empty($account_info['webapp_limit'])}
+		<div class="alert alert-warning hidden">
+			温馨提示：
+			<i class="fa fa-info-circle"></i>
+			Hi，<span class="text-strong">{$_W['username']}</span>，您所在的会员组： <span class="text-strong">{$account_info['group_name']}</span>，{if !user_is_vice_founder() && !empty($account_info['vice_group_name'])}<span class="text-strong">{$account_info['vice_group_name']}，</span>{/if}
+			账号有效期限：<span class="text-strong">{php echo date('Y-m-d', $_W['user']['starttime'])} ~~ {if empty($_W['user']['endtime'])}无限制{else}{php echo date('Y-m-d', $_W['user']['endtime'])}{/if}</span>，
+			可创建 <span class="text-strong">{$account_info['maxwebapp']} </span>个PC，已创建<span class="text-strong"> {$account_info['webapp_num']} </span>个，还可创建 <span class="text-strong">{$account_info['webapp_limit']} </span>个PC账号。
+		</div>
+		{/if}
+
+		<div class="clearfix"></div>
+
+		<div class="cut-list clearfix">
+			{loop $list $item}
+			<div class="item" ng-mouseenter="show = true" ng-mouseleave="show = false">
+				<div class="content">
+					<img src="{$item['logo']}" class="icon-account" onerror="this.src='./resource/images/nopic-107.png'"/>
+					<div class="name">{$item['name']}</div>
+					<div class="type">
+
+					</div>
+				</div>
+				<div class="mask" ng-show="show">
+					<a href="{$item['switchurl']}" class="entry">
+						<div>进入PC <i class="wi wi-angle-right"></i></div>
+					</a>
+					<!--<a href="javascript:;" class="stick" ng-click="stick(detail.uniacid)" title="置顶">-->
+						<!--<i class="wi wi-stick-sign"></i>-->
+					<!--</a>-->
+				</div>
+			</div>
+			{/loop}
+		</div>
+		{if count($list)==0 }
+		<ul style="text-align:center;width:100%"><span>暂无数据</span></ul>
+		{/if}
+		<div>{$pager}</div>
+	</div>
+</div>
+<script type="text/javascript">
+	angular.module('accountApp').value('config', {
+		accountList: {php echo !empty($account_list) ? json_encode($account_list) : 'null'},
+		accountTotal: "{$total}",
+		pagesize: "{$psize}",
+		links: {
+			rank: "{php echo url('account/display/rank')}",
+			display: "{php echo url('account/display/display')}",
+		},
+		scrollUrl : "{php echo url('account/display')}",
+		keyword : "{$keyword}",
+		letter : "{$letter}"
+	});
+	angular.bootstrap($('#js-account-display'), ['accountApp']);
+	// 鼠标移入显示隐藏
+	angular.module('accountApp').controller('AccountDisplay',function($scope){
+		$scope.show = false;
+	})
+</script>
+{template 'common/footer'}

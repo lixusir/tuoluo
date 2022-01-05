@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+<style>
+	#boelq_oe .fui-searchbar{
+		width: 100%;
+		height: 4.8rem;
+		background: url(../addons/wx_shop/template/mobile/default/static/images/img_new/top_bg_3.png) no-repeat;
+		background-size: 100% 100%;
+	}
+	#boelq_oe .searchbar{
+		width: 70%;
+		
+	}
+	#boelq_oe .search-input .search{
+		height: 1.75rem;
+	}
+	#boelq_oe .search-input i{
+		top: 4px;
+	}
+	.qita_box{
+		width: 30%;
+		/* background:	#fff; */
+	}
+	.qita_box .qita_p{
+		width: 50%;
+		height: 100%;
+		color: #fff;
+		text-align: center;
+	}
+	.qita_box .qita_p img{
+		width: 1.3rem;
+		height: 1.3rem;
+	}
+	.fui-searchbar .searchbar .searchbar-cancel{
+		color: #fff;
+	}
+</style>
+<form action="{php echo mobileUrl('goods')}" id="boelq_oe" class="" method="post">
+	<div class="fui-searchbar bar flex flex-center-align flex-jcsb">
+		<div class="searchbar center">
+			<input type="submit" class="searchbar-cancel searchbtn" value="搜索" />
+			<div class="search-input flex flex-center-align">
+				<i class="icon icon-search"></i>
+				<input type="search" placeholder="输入关键字..." class="search" name="keywords">
+			</div>
+		</div>
+		<div class="qita_box flex flex-center-align">
+			<p class="qita_p flex flex-col flex-center-align">
+				<img src="../addons/wx_shop/template/mobile/default/static/images/img_new/icon_jil.png" alt="">
+				<span>订单</span>
+			</p>
+			<p class="qita_p flex flex-col flex-center-align">
+				<img src="../addons/wx_shop/template/mobile/default/static/images/img_new/icon_yy.png" alt="">
+				<span>摇一摇</span>
+			</p>
+		</div>
+
+	</div>
+
+</form>
+
+<script>
+
+	$(function () {
+
+		$("input[name='keywords']").focusin(function () {
+
+			$(this).removeAttr('placeholder');
+
+		});
+
+		$("input[name='keywords']").focusout(function () {
+
+			$(this).attr('placeholder','输入关键字...');
+
+		});
+
+		$("form").submit(function () {
+
+			$(this).find("input[name='keywords']").blur();
+
+		});
+
+	});
+
+</script>
+

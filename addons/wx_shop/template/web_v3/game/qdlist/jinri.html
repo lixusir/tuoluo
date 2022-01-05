@@ -1,0 +1,228 @@
+{template '_header'}
+
+<div class="page-header">当前位置：<span class="text-primary">敲蛋管理</span></div>
+
+<div class="page-content">
+
+    <form {ife 'game.qdlist.add' $goods}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
+
+        
+
+        <input type="hidden" name="c" value="site" />
+        <input type="hidden" name="a" value="entry" />
+        <input type="hidden" name="m" value="wx_shop" />
+        <input type="hidden" name="do" value="web" />
+        <input type="hidden" name="r"  value="game.qdlist.day" />
+        <input type="hidden" name="day"  value="1" />
+
+        <div class="page-toolbar">
+            <div class="pull-left">
+                {ifp 'game.qdlist.add'}
+                    <!-- <a class='btn btn-primary btn-sm' href="{php echo webUrl('game/qdlist/add')}"><i class='fa fa-plus'></i> 添加敲蛋</a> -->
+                {/if}
+            </div>
+            <div class="pull-right col-md-6">
+                <div class="input-group">
+                    <!-- <div class="input-group-select">
+                        <select name="enabled" class='form-control'>
+                            <option value="" {if $_GPC['enabled'] == ''} selected{/if}>状态</option>
+                            <option value="1" {if $_GPC['enabled']== '1'} selected{/if}>启用</option>
+                            <option value="0" {if $_GPC['enabled'] == '0'} selected{/if}>禁用</option>
+                        </select>
+                    </div> -->
+                    <!-- <input type="text" class=" form-control" name='keyword' value="{$_GPC['keyword']}" placeholder="请输入关键词"> -->
+                    <input type="submit" value="提交" class="btn btn-primary"  />
+
+                    <!-- <span class="input-group-btn"> -->
+                        <!-- <button class="btn btn-primary" type="submit"> 本日上传</button> -->
+                    <!-- </span> -->
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {if empty($list)}
+        <div class="panel panel-default">
+            <div class="panel-body empty-data">未查询到相关数据</div>
+        </div>
+    {else}
+        <form action="" method="post" >
+            <div class="page-table-header">
+                <input type="checkbox">
+                <div class="btn-group">
+                    {ifp 'game.qdlist.delete'}
+                    <!-- <button class="btn btn-default btn-sm btn-operation" type="button" data-toggle='batch-remove' data-confirm="确认要删除?" data-href="{php echo webUrl('game/qdlist/delete')}"><i class='icow icow-shanchu1'></i> 删除</button> -->
+                    {/if}
+                </div>
+            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:500px;">id</th>
+                        
+                        <th style="width:500px;">今日剩余</th>
+                        
+                        <th style="width: 500px">累计奖品</th>
+                        
+                        <th style="width: 400px">时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                        <tr>
+                            <td>{$row['id']}</td>
+
+                            <td>{$row['data_sy_num']}<a class='label label-success' onclick="detail('{$row['id']}')">详情</a></td>
+
+                            <td>
+                                {$row['lj']}<a class='label label-success' onclick="detail1('{$row['id']}')">详情</a>
+                            </td>
+
+                            <td>{$row['time']}</td>
+
+                        </tr>
+                    {/loop}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td colspan="2">
+                            <div class="btn-group">
+                                {ifp 'game.qdlist.delete'}
+                                    <!-- <button class="btn btn-default btn-sm btn-operation" type="button" data-toggle='batch-remove' data-confirm="确认要删除?" data-href="{php echo webUrl('game/qdlist/delete')}"><i class='icow icow-shanchu1'></i> 删除</button> -->
+                                {/if}
+                            </div>
+                        </td>
+                        <td colspan="4" style="text-align: right">
+                            <span class="pull-right" style="line-height: 28px;">(共{php echo count($list)}条记录)</span>
+                            {$pager}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    {/if}
+</div>
+
+<script>
+
+    function detail(id)
+
+    {   var url="/web/index.php?c=site&a=entry&m=wx_shop&do=web&r=game.qdjinri.all&type=1&getdetail="+id;
+
+         $.get(url, '', function(dat){
+
+                $("#tablem").html("<tr><td>名称</td><td>奖励金额</td><td>概率</td><td>类型</td></tr>");
+
+                 dat=JSON.parse(dat);
+
+                 // dac = dat
+                 console.log(dat)
+                 console.log(dat.length)
+                for(var i=0;i<dat.length;i++){
+
+                    var html=""
+
+                    // html+="<tr><td><img src='"+dat[i].avatar+"' style='width:30px;height:30px;padding1px;border:1px solid #ccc'>"+dat[i].nickname+"</td>";
+
+                    html+="<tr><td>"+dat[i].goodsname+"</td>";
+
+                    html+="<td>"+dat[i].money+"</td>";
+
+                    html+="<td>"+dat[i].gl+"%</td>";
+
+                    html+="<td>"+dat[i].status_s+"</td></tr>";
+
+                    $("#tablem").append(html); 
+
+                }
+                 // console.log(html)
+
+                $('#modal-express').modal();return;
+
+            });
+
+    }
+
+     function detail1(id)
+
+    {   var url="/web/index.php?c=site&a=entry&m=wx_shop&do=web&r=game.qdjinri.all&type=2&getdetail="+id;
+
+         $.get(url, '', function(dat){
+
+                $("#tablem").html("<tr><td>名称</td><td>奖励金额</td><td>概率</td><td>类型</td></tr>");
+
+                 dat=JSON.parse(dat);
+
+                 // dac = dat
+                 // console.log(dat)
+                for(var i=0;i<dat.length;i++){
+
+                    var html=""
+
+                    // html+="<tr><td><img src='"+dat[i].avatar+"' style='width:30px;height:30px;padding1px;border:1px solid #ccc'>"+dat[i].nickname+"</td>";
+                    html+="<tr><td>"+dat[i].goodsname+"</td>";
+
+                    html+="<td>"+dat[i].money+"</td>";
+
+                    html+="<td>"+dat[i].gl+"%</td>";
+
+                    html+="<td>"+dat[i].status_s+"</td></tr>";
+
+                    $("#tablem").append(html); 
+
+                }
+                 console.log(html)
+
+                $('#modal-express').modal();return;
+
+            });
+
+    }
+
+</script>
+
+<div id="modal-express" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:920px;margin:0px auto;">
+
+     
+
+        <div class="modal-dialog" style="width:920px;">
+
+            <div class="modal-content" >
+
+                <div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3 id="nums1"></h3><h3 id="nums2"></h3>
+
+                 <h3  style="font-size:18px;">详情</h3>
+
+                </div>
+
+                <div class="modal-body" >
+
+                      <div style="max-height:500px;overflow:auto;min-width:850px;">
+
+                         <table class="table table-hover" style="min-width:850px;">
+
+                   <tbody id="tablem"> 
+
+
+
+                    </tbody>
+
+                       </table>
+
+                       </div>
+
+                </div>
+
+                <div class="modal-footer"><a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+
+            </div>
+
+        </div>
+
+ 
+
+</div>
+
+{template '_footer'}
+

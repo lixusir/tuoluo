@@ -1,0 +1,95 @@
+<div class="form-group">
+    <label class="col-lg control-label">代理等级</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'weightbonus.weight.edit'}
+        <select name='wdata[weightlevel]' class='form-control'>
+            <option value='0'>{php echo empty($plugin_weightbonus_set['levelname'])?'默认等级':$plugin_weightbonus_set['levelname']} </option>
+            {loop $weightlevels $level}
+            <option value='{$level['id']}' {if $member['weightlevel']==$level['id']}selected{/if}>{$level['levelname']}</option>
+            {/loop}
+        </select>
+        {else}
+        <input type="hidden" name="wdata[weightlevel]" class="form-control" value="{$member['weightlevel']}"  />
+
+        {if empty($member['weightlevel'])}
+        {php echo empty($plugin_weightbonus_set['levelname'])?'默认等级':$plugin_weightbonus_set['levelname']}
+        {else}
+        {php echo pdo_fetchcolumn('select levelname from '.tablename('ewei_shop_weightbonus_level').' where id=:id limit 1',array(':id'=>$member['weightlevel']))}
+        {/if}
+        {/if}
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-lg control-label">累计分红</label>
+    <div class="col-sm-9 col-xs-12">
+        <div class='form-control-static'> {php echo $member['weightbonusmoney']}</div>
+    </div>
+</div>
+ 
+{if !empty($member['weighttime'] && $member['isweight']==1)}
+<div class="form-group">
+    <label class="col-lg control-label">成为代理时间</label>
+    <div class="col-sm-9 col-xs-12">
+        <div class='form-control-static'>{php echo date('Y-m-d H:i:s',$member['weighttime'])}</div>
+    </div>
+</div>
+{/if}
+<div class="form-group">
+    <label class="col-lg control-label">代理权限</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'weightbonus.weight.check'}
+        <label class="radio-inline"><input type="radio" name="wdata[isweight]" value="1" {if $member['isweight']==1}checked{/if}>是</label>
+        <label class="radio-inline" ><input type="radio" name="wdata[isweight]" value="0" {if $member['isweight']==0}checked{/if}>否</label>
+        {else}
+        <input type='hidden' name='wdata[isweight]' value='{$member['isweight']}' />
+        <div class='form-control-static'>{if $member['isweight']==1}是{else}否{/if}</div>
+        {/if}
+
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-lg control-label">审核通过</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'weightbonus.weight.check'}
+        <label class="radio-inline"><input type="radio" name="wdata[weightstatus]" value="1" {if $member['weightstatus']==1}checked{/if}>是</label>
+        <label class="radio-inline" ><input type="radio" name="wdata[weightstatus]" value="0" {if $member['weightstatus']==0}checked{/if}>否</label>
+        <input type='hidden' name='oldweightstatus' value="{$member['weightstatus']}" />
+        {else}
+        <input type='hidden' name='wdata[weightstatus]' value='{$member['weightstatus']}' />
+        <div class='form-control-static'>{if $member['weightstatus']==1}是{else}否{/if}</div>
+        {/if}
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-lg control-label">强制不自动升级</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'weightbonus.weight.edit'}
+        <label class="radio-inline" ><input type="radio" name="wdata[weightnotupgrade]" value="0" {if $member['weightnotupgrade']==0}checked{/if}>允许自动升级</label>
+        <label class="radio-inline"><input type="radio" name="wdata[weightnotupgrade]" value="1" {if $member['weightnotupgrade']==1}checked{/if}>强制不自动升级</label>
+        <span class="help-block">如果强制不自动升级，满足任何条件，此代理的级别也不会改变</span>
+        {else}
+        <input type="hidden" name="wdata[weightnotupgrade]" class="form-control" value="{$member['weightnotupgrade']}"  />
+        <div class='form-control-static'>{if $member['weightnotupgrade']==1}强制不自动升级{else}允许自动升级{/if}</div>
+        {/if}
+    </div>
+</div>
+
+
+{if $diyform_flag_weightbonus == 1}
+
+    <div class='form-group-title'>自定义表单信息</div>
+
+    {php $datas = iunserializer($member['diyweightbonusdata'])}
+    {loop $gfields $key $value}
+    <div class="form-group">
+        <label class="col-lg control-label">{php echo $value['tp_name']}</label>
+        <div class="col-sm-9 col-xs-12">
+            <div class="form-control-static">
+                {template 'diyform/diyform'}
+            </div>
+        </div>
+    </div>
+    {/loop}
+{/if}

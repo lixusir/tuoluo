@@ -1,0 +1,1 @@
+<?php if(!defined('IN_IA')) {exit('Access Denied');}if(!defined('WX_SHOP_VERSION')) {define('WX_SHOP_VERSION', '3.3.3');}if(!defined('WX_SHOP_RELEASE')) {define('WX_SHOP_RELEASE', '20180306142612');}

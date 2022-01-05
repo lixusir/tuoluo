@@ -1,0 +1,88 @@
+ {template '_header'}
+ <div class="page-header">
+     当前位置：<span class="text-primary">代理等级</span>
+</div>
+<div class="page-content">
+    <div class="page-sub-toolbar">
+            <span class=''>
+
+		 {ifp 'weightbonus.level.add'}
+           <a class='btn btn-primary btn-sm' data-toggle='ajaxModal' href="{php echo webUrl('weightbonus/level/add')}"><i class="fa fa-plus"></i> 添加新等级</a>
+		 {/if}
+
+	</span>
+    </div>
+            <table class="table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th style='width:160px;'>等级名称</th>
+                        <th style='width:160px;'>等级权重</th>
+                        <th>分红比例</th>
+                        <th>升级条件</th>
+                        <th style="width: 75px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr {if $row['id']=='default'}style='background:#f2f2f2'{/if}>
+                        <td>{$row['levelname']}{if $row['id']=='default'}【默认等级】{/if}</td>
+                        <td>{$row['weight']}</td>
+                        <td>{php echo number_format((float)$row['bonus'],4)}%</td>
+                        <td>
+                            {if $row['id']!='default'}
+                            {if $row['levelcondition']==1} <span style="color: #44abf7;">【满足其中一个】</span> </br>
+                            {else} <span style="color: #44abf7;">【同时满足多个条件】</span> </br>{/if}
+
+                            {if in_array('0',iunserializer($row['leveltypes_json']))}分销订单金额满 {$row['ordermoney']} 元 </br>{/if}
+                            {if in_array('1',iunserializer($row['leveltypes_json']))}一级分销订单金额满 {$row['ordermoney1']} 元 </br>{/if}
+                            {if in_array('2',iunserializer($row['leveltypes_json']))}分销订单数量满 {$row['ordercount']} 个 </br>{/if}
+                            {if in_array('3',iunserializer($row['leveltypes_json']))}一级分销订单数量满 {$row['ordercount1']} 个 </br>{/if}
+                            {if in_array('4',iunserializer($row['leveltypes_json']))}自购订单金额满 {$row['ordermoney2']} 元 </br>{/if}
+                            {if in_array('5',iunserializer($row['leveltypes_json']))}自购订单数量满 {$row['ordercount2']} 个 </br>{/if}
+
+                            {if in_array('6',iunserializer($row['leveltypes_json']))}下级总人数满 {$row['downcount']} 个（分销商+非分销商） </br>{/if}
+                            {if in_array('7',iunserializer($row['leveltypes_json']))}一级下级人数满 {$row['downcount1']} 个（分销商+非分销商） </br>{/if}
+
+                            {if in_array('8',iunserializer($row['leveltypes_json']))}团队总人数满 {$row['teamcount']} 个（分销商） </br>{/if}
+                            {if in_array('9',iunserializer($row['leveltypes_json']))}一级团队人数满 {$row['teamcount1']} 个（分销商） </br>{/if}
+
+
+                            {if in_array('10',iunserializer($row['leveltypes_json']))}已提现佣金总金额满 {$row['commissionmoney']} 元</br>{/if}
+                            {if in_array('11',iunserializer($row['leveltypes_json']))}已发放分红总金额满 {$row['bonusmoney']} 元</br>{/if}
+                            {else}
+                                默认等级
+                            {/if}
+                          </td>
+                        <td>
+							{ifp 'weightbonus.level.edit'}
+                            <a class='btn btn-default btn-sm btn-op btn-operation' data-toggle='ajaxModal'  href="{php echo webUrl('weightbonus/level/edit', array('id' => $row['id']))}" title="{ifp 'weightbonus.level.edit'}编辑{else}查看{/if}">
+                                <span data-toggle="tooltip" data-placement="top" data-original-title="{ifp 'weightbonus.level.edit'}编辑{else}查看{/if}">
+                                    {ifp 'weightbonus.level.edit'}
+                                    <i class='icow icow-bianji2'></i>
+                                    {else}
+                                   <i class='icow icow-chakan-copy'></i>
+                                    {/if}
+
+                                </span>
+                            </a>
+                            {/if} 
+                            {if $row['id']!='default'}
+							 {ifp 'weightbonus.level.delete'}
+								<a class='btn btn-default btn-sm btn-op btn-operation' data-toggle='ajaxRemove'  href="{php echo webUrl('weightbonus/level/delete', array('id' => $row['id']))}" data-confirm="确认删除此等级吗？">
+                                    <span data-toggle="tooltip" data-placement="top" title="" data-original-title="删除">
+                                       <i class='icow icow-shanchu1'></i>
+                                    </span>
+                                </a>
+                        </td>
+						{/if}
+						{/if}
+
+                    </tr>
+                    {/loop}
+                
+                </tbody>
+            </table>
+</div>
+ {template '_footer'}
+
+

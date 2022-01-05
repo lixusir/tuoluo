@@ -1,0 +1,104 @@
+<style>
+    .recharge_info{
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+    }
+    .recharge_info>div{
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        border:1px solid #efefef;
+        margin: 0 10px;
+        padding:10px 22px;
+        line-height: 25px;
+        color: #333;
+    }
+</style>
+<form action="" method="post" class="form-horizontal form-validate" enctype="multipart/form-data">
+
+    <input type="hidden" name="c" value="site" />
+    <input type="hidden" name="a" value="entry" />
+    <input type="hidden" name="m" value="wx_shop" />
+    <input type="hidden" name="do" value="web" />
+    <input type="hidden" name="r" value="weightbonus.detail" />
+    <input type='hidden' name='type' value="{$type}" />
+    <input type='hidden' name='id' value="{$id}" />
+
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">分红明细 - 订单：{$orders['ordersn']}</h4>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div class="recharge_info">
+                    <div>
+                        <label class="pull-left" style="margin-right: 25px">订单总金额(元)</label>
+                        <div class="pull-left">
+                           {$orders['price']}
+                        </div></br>
+                        <label class="pull-left " style="margin-right: 25px;">设定总分红(元)</label>
+                        <div class="pull-left" style="color: red">
+                            {$orders['weightbonusprice']}
+                        </div>
+                    </div>
+                    <div>
+                        <label class="pull-left " style="margin-right: 25px">极差：</label>
+                        <div class="pull-left">
+                            {if $orders['weightbonus_range']==1}<span style="color: green">开启</span>{else}<span style="color: orange">关闭</span>{/if}
+                        </div></br>
+                        <label class="pull-left " style="margin-right: 25px">自购：</label>
+                        <div class="pull-left">
+                            {if $orders['weightbonus_selfbuy']==1}<span style="color: green">开启</span>{else}<span style="color: orange">关闭</span>{/if}
+                        </div>
+                    </div>
+
+                </div>
+                <hr style="background-color:#44abf7; height:1px; border: none;"/>
+
+
+                {loop $weights $k $w}
+                    <div class="recharge_info">
+                        <div>
+                            <label class="pull-left" style="margin-right: 25px;">{$w['nickname']}</label></br>
+                            <label class="pull-left " style="margin-right: 25px">代理权重：{$w['weight']}</label>
+                            <label class="pull-left " style="margin-right: 25px">代理等级：{$w['levelname']}</label></br>
+                        </div>
+                        <div>
+                            <label class="pull-left " style="margin-right: 25px">分红比例：</label>
+                            <div class="pull-left">
+                                {$w['bonus']}%
+                            </div></br>
+                            <label class="pull-left " style="margin-right: 25px">所得分红：</label>
+                            <div class="pull-left" style="color: red">
+                                {$w['bonusmoney']}元
+                            </div>
+                        </div>
+                    </div>
+                <hr>
+                {/loop}
+
+                <span style="margin: 0 10px;">该订单所有代理分红总金额：<font style="color: red">{$bonusmoney}元</font></span>
+
+            </div> <div class="modal-footer">
+        </div>
+        </div>
+    </div>
+
+</form>
+<script language='javascript'>
+    $(function(){
+
+
+    })
+</script>
+

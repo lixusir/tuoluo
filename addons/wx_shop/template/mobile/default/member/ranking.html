@@ -1,0 +1,171 @@
+{template '_header'}
+<link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+<style>
+    .body_box{
+        background-image:linear-gradient(to bottom, #ee6902,#ec9e00);
+        padding-top:2rem ;
+    }
+    .tlex_div{
+        width: 100%;
+        text-align: center;
+        color: #fcf010;
+    }
+    .tlex_div p:nth-child(1){
+        font-size: 2rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+    }
+    .ranking_box{
+        width: 100%;
+        padding: 0 1rem;
+    }
+    .ranking_box .ranking_top{
+        width: 100%;
+        height: 3rem;
+        background: #994600;
+        border-radius: .3rem .3rem 0 0 ;
+        padding: 0  1rem;
+        color: #fff;
+        box-shadow: 0px 11px 10px rgba(0, 0, 0, .3);
+        position: relative;
+        z-index: 3;
+    }
+    .ranking_box .ranking_top::after{
+        content:"";
+        width: 0;
+        height: 0;
+        border-top: 1rem solid #613005;
+        border-right: 1rem solid transparent;
+        border-left: 0 solid transparent;
+        display: block;
+        position: absolute;
+        right: 0;
+        bottom: -1rem;
+    }
+    .ranking_box .ranking_top::before{
+        content:"";
+        width: 0;
+        height: 0;
+        border-top: 1rem solid #613005;
+        border-right: 0 solid transparent;
+        border-left: 1rem solid transparent;
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -1rem;
+    }
+    .ranking_box .ranking_span{
+        text-align: center;
+        color: #faf213;
+        font-weight: bold;
+    }
+    .ranking_top .ranking_img{
+        width: 2.2rem;
+        height: 2.2rem;
+        display: block;
+        /* background: #000; */
+        
+        border: 3px solid #fff;
+        border-radius: 50%;
+    }
+    .ranking_ul{
+        padding: 0 1rem;
+    }
+    .ranking_ul .ranking_li{
+        width: 100%;
+        height: 3.5rem;
+        background: #ffcfa7;
+        padding-left:  .8rem;
+    }
+    .ranking_ul .ranking_li>span:nth-child(1){
+        color: #984500;
+        font-weight: bold;
+        font-size: .9rem;
+    }
+    .ranking_ul .nuo_icon{
+        width: 1rem;
+        height: 1.4rem;
+        /* background: #000; */
+        margin-right: .5rem;
+    }
+    .ranking_li_div{
+        width: 91%;
+        height: 100%;
+        border-bottom: 1px solid #ffe6d5;
+        padding-right: .5rem;
+        color: #984500;
+        font-weight: bold;
+    }
+    .ranking_li_div  img{
+        width: 2.2rem;
+        height: 2.2rem;
+        display: block;
+        /* background: #000; */
+        border: 1px solid #fff;
+        border-radius: 50%;
+        margin-right: .5rem;
+    }
+    .younan{
+        width: 5rem;
+        display: inline-block;
+        /* background: red; */
+        overflow:hidden;
+    	text-overflow:ellipsis;
+   	    white-space:nowrap;
+    }
+    .imf_box{
+        width: 30px;
+        height: 1.8rem;
+        display: inline-block;
+    }
+</style>
+
+<div class="fui-page  fui-page-current">
+    <div class="fui-content body_box">
+        <div class="tlex_div">
+            <p>邀请送神鸟</p>
+            <p>邀请榜前十名公测登录即送神鸟</p>
+        </div>
+        <!-- 排名 -->
+        <div class="ranking_box">
+            <div class="ranking_top flex flex-jcsb flex-center-align">
+                <span class="ranking_span">
+                    <p>{$pm}</p>
+                    <p>我的排名</p>
+                </span>
+                <img class="ranking_img" src="{$member['avatar']}" alt="">
+                <span class="younan">{$member['nickname']}</span>
+                <span>邀请{$num}人</span>
+            </div>
+            <ul class="ranking_ul">
+
+                {loop $arr $k $v}
+                <li class="ranking_li flex flex-jcsb flex-center-align">
+                    <!-- <img class="nuo_icon" src="" alt=""> -->
+                    <span class="imf_box">{$k}</span>
+
+                    <span class="ranking_li_div flex flex-jcsb flex-center-align">
+                        <div class="flex flex-center-align">
+                            <img src="{$v['avatar']}" alt="">
+                            <span class="younan">{$v['nickname']}</span>
+                        </div>
+                        <span>邀请{$v['xias']}人</span>
+                    </span>
+                </li>
+                {/loop}
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<script>
+    $(function(){
+        var ranking_li =  $('.ranking_ul .ranking_li')
+        for(var i=0;i<3;i++){
+            console.log()
+            $(ranking_li[i]).find(".imf_box").html('<img class="nuo_icon" src="../addons/wx_shop/template/mobile/default/static/images/bke'+i+'.png" alt="">')
+        }
+    })
+</script>
+
+{template '_footer'}

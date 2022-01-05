@@ -1,0 +1,320 @@
+{template '_header'}
+
+<style>
+
+    .style i{
+
+        vertical-align: middle;
+
+    }
+
+</style>
+
+<div class="page-header">当前位置：<span class="text-primary">视频记录</span></div>
+
+<div class="page-content">
+
+    <form action="./index.php" method="get" class="form-horizontal table-search" role="form" id="form1">
+
+        <input type="hidden" name="c" value="site" />
+
+        <input type="hidden" name="a" value="entry" />
+
+        <input type="hidden" name="m" value="wx_shop" />
+
+        <input type="hidden" name="do" value="web" />
+
+        <input type="hidden" name="r" value="game.videolog" />
+
+        <div class="page-toolbar">
+
+            <span class="pull-left">
+
+                    {php echo tpl_daterange('time', array('sm'=>true,'placeholder'=>'时间'),true);}
+
+                </span>
+
+            <div class="input-group">
+
+
+
+                <!-- <span class="input-group-select">
+
+                    {if $_GPC['type']==0}
+
+                    <select name="paytype" class="form-control" style="width:100px;"  >
+
+                        <option value='' {if $_GPC['paytype']==''}selected{/if}>类型</option>
+
+                        {loop $paytype $k $v}
+                        <option value="{$v}" {if $_GPC['paytype']==$v}selected{/if}>{$k}</option>
+                        {/loop}
+
+                    </select>
+
+                    {/if}
+
+                </span> -->
+
+
+                <input type="text" class="form-control"  name="keyword" value="{$_GPC['keyword']}" placeholder="会员id/手机号码/昵称" />
+
+                <span class="input-group-btn">
+
+                    <button class="btn  btn-primary" type="submit"> 搜索</button>
+
+                    {ifp 'game.videolog.videolog.export'}
+
+                        <!-- <button type="submit" name="export" value="1" class="btn btn-success ">导出</button> -->
+
+                    {/if}
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    {if empty($list)}
+
+    <div class="panel panel-default">
+
+        <div class="panel-body empty-data">未查询到相关数据</div>
+
+    </div>
+
+    {else}
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <table class="table">
+
+                <thead>
+
+                <tr>
+
+                    <th style='text-align: center;width:100px;'>id</th>
+
+
+                    <th style='text-align: center;width:200px;'>会员id</th>
+                    
+                    <!-- <th style='text-align: center;width:200px;'>id</th> -->
+                    
+                    <th style='text-align: center;width:200px;'>粉丝</th>
+
+                    <th style='text-align: center;width:200px;'>会员信息</th>
+
+                    <th style='text-align: center;width:200px;'>金额</th>
+                    
+                    <th style='text-align: center;width:200px;'>奖励上级</th>
+                    
+
+
+
+                    
+                    <th style='text-align: center;width:300px;'>详细信息</th>
+
+                    <th style='text-align: center;width:300px;'>时间</th>
+
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {loop $list $row}
+
+                <tr>    
+                    <td style='text-align: center;'>{$row['id']}</td>
+
+
+                    <td style='text-align: center;'>{$row['uid']}</td>
+                   
+                    <!-- <td style='text-align: center;'>{$row['id']}</td> -->
+
+                    <td style='text-align: center;' data-toggle='tooltip' title='{$row['nickname']}'>
+
+                    {ifp 'member.list.detail'}
+
+                    <a  href="{php echo webUrl('member/list/detail',array('id' => $row['uid']));}" target='_blank'>
+
+                        <img class="radius50" src='{php echo tomedia($row['avatar'])}' style='width:30px;height:30px;padding1px;border:1px solid #ccc' / onerror="this.src='../addons/wx_shop/static/images/noface.png'"> {$row['nickname']}
+
+                    </a>
+
+                    {else}
+
+                    <img src='{php echo tomedia($row['avatar'])}' style='width:30px;height:30px;padding1px;border:1px solid #ccc' /> {$row['nickname']}
+
+                    {/if}
+
+
+
+                    </td>
+
+                    <td style="text-align: center;">{if !empty($row['realname'])}{$row['realname']}{else}匿名{/if}<br/>{if !empty($row['mobile'])}{$row['mobile']}{else}暂无{/if}</td>
+
+                    <td style="text-align: center;">{$row['money']}</td>
+
+
+
+                    <td style="text-align: center;"><a class='label label-success' onclick="detail('{$row['id']}','{$row['uid']}')">详情</a></td>
+
+
+
+
+                    <td style="text-align: center;">
+
+
+                        <span class='text-success'>{$row['content']}</span>
+
+
+
+                    </td>
+                    
+                    <td style="text-align: center;" class="style">{$row['time']}</td>
+
+
+                </tr>
+
+                {if !empty($row['remark'])}
+
+                <tr style=";border-bottom:none;background:#f9f9f9;">
+
+                    <td colspan='8' style='text-align:left'>
+
+                        备注:<span class="text-info">{$row['remark']}</span>
+
+                    </td>
+
+                </tr>
+
+                {/if}
+
+                {/loop}
+
+                </tbody>
+
+                <tfoot>
+
+                <tr>
+
+                    </td>
+
+                    <td colspan="8" style="text-align: right">
+
+                        {$pager}
+
+                    </td>
+
+                </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {/if}
+
+
+
+</div>
+<div id="modal-express" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:920px;margin:0px auto;">
+
+     
+
+        <div class="modal-dialog" style="width:920px;">
+
+            <div class="modal-content" >
+
+                <div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3 id="nums1"></h3><h3 id="nums2"></h3>
+
+                 <h3  style="font-size:18px;">详情</h3>
+
+                </div>
+
+                <div class="modal-body" >
+
+                      <div style="max-height:500px;overflow:auto;min-width:850px;">
+
+                         <table class="table table-hover" style="min-width:850px;">
+
+                   <tbody id="tablem"> 
+
+
+
+                    </tbody>
+
+                       </table>
+
+                       </div>
+
+                </div>
+
+                <div class="modal-footer"><a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+
+            </div>
+
+        </div>
+
+ 
+
+</div>
+    
+<script type="text/javascript">
+function detail(id,uid)
+
+    {   var url="/web/index.php?c=site&a=entry&m=wx_shop&do=web&r=game.videolog.jl&videoid="+id+"&uid="+uid;
+
+         $.get(url, '', function(dat){
+
+                $("#tablem").html("<tr><td>发放人id</td><td></td><td>分销金额</td><td>神鸟金额</td><td>分红金额</td><td>比例</td><td>是否发放</td><td>类型</td></tr>");
+
+                 dat=JSON.parse(dat);
+
+                 // dac = dat
+                 console.log(dat)
+                 console.log(dat.length)
+                for(var i=0;i<dat.length;i++){
+
+                    var html=""
+
+
+                    html+="<tr><td>"+dat[i].uid+"</td>";
+                    
+                    html+="<td><img src='"+dat[i].avatar+"' style='width:30px;height:30px;padding1px;border:1px solid #ccc'>"+dat[i].nickname+"</td>";
+
+                    html+="<td>"+dat[i].fx_money+"</td>";
+                    html+="<td>"+dat[i].sn_money+"</td>";
+                    html+="<td>"+dat[i].fh_money+"</td>";
+
+                    html+="<td>"+dat[i].bili+"%</td>";
+                    
+                    html+="<td>"+dat[i].status_s+"</td>";
+
+                    html+="<td>"+dat[i].type_s+"</td></tr>";
+
+                    $("#tablem").append(html); 
+
+                }
+                 // console.log(html)
+
+                $('#modal-express').modal();return;
+
+            });
+
+    }
+
+</script>
+
+{template '_footer'}
+
+<!--efwww_com-->

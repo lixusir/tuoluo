@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+        <script> document.documentElement.style.fontSize =document.documentElement.clientWidth/750*40 +"px";</script>
+        <meta name="format-detection" content="telephone=no" />
+        <title>系统消息</title>
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/static/js/dist/foxui/css/foxui.min.css?v=0.2">
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/mobile/default/static/css/style.css?v=3.0.0">
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/mobile/default/static/css/h5app.css?v=2.0.3">
+		<script src="../newH5/js/jquery-1.7.2.min.js"></script>
+		<script src="../newH5/js/myui.js"></script>
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_1566660_d06eev9leo.css">
+        <link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+</head>
+
+
+<style>
+	.fui-header{
+		border-bottom: 1px solid #ddd;
+	}
+	.fui-page, .fui-page-group{
+		background: #fff;
+	}
+	.list_ul{
+		width: 100%;
+		/* margin-top: 2.2rem; */
+		padding-bottom: .75rem;
+		background: #fff;
+	}
+	.list_ul .list_li{
+		width: 100%;
+		padding: .75rem 0 0  .75rem;
+	}
+	.list_ul .list_li img{
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+	.list_ul .list_div{
+		width: 90%;
+		border-bottom: 1px solid #DDDDDD;
+		padding:0 .75rem .75rem 0; 
+		color: #999;
+		font-size: 0.55rem;
+	}
+	.list_ul .list_div .span_left p:nth-child(1){
+		font-size:.75rem;
+		font-weight: bold;
+		color: #000;
+	}
+	.list_ul .list_div .span_left p:nth-child(2){
+		color: #999;
+		font-size: 0.55rem;
+		width: 10rem;
+		overflow:hidden;
+    	text-overflow:ellipsis;
+		white-space:nowrap;
+	}
+	.list_ul .list_div .span_right{
+		position: relative;
+	}
+	.red_dian{
+		position: absolute;
+		right: 0;
+		display: block;
+		width: .3rem;
+		height: .3rem;
+		background: #E94444;
+		border-radius:50% ;
+		margin-top: .5rem;
+		display: none;
+	}
+	.display_box{
+		display: block;
+	}
+	.zz_box{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		display: none;
+		top: 0;
+		left: 0;
+		background: rgba(0, 0, 0, .2);
+		padding: 25% 1.5rem 0;
+	}
+	.zz_box .zz_div{
+		width: 100%;
+		min-height: 18rem;
+		border: 2px solid #CAAF52;
+		background: #FFEDAE;
+		border-radius: .3rem;
+		padding-bottom: 1rem;
+		position: relative;
+	}
+	.zz_box .zz_tili{
+		text-align: center;
+		width: 100%;
+		height: 2rem;
+		line-height: 2rem;
+		border-bottom: 1px solid #CAAF52;
+		color: #6C2127;
+		font-size: .75rem;
+		font-weight: bold;
+	}
+	.zz_box .text_div{
+		width: 100%;
+		padding: 1.5rem 1.48rem;
+		max-height: 13rem;
+		overflow-y: scroll;
+		color: #6C2127;
+	}
+	.zz_box .yes_btn{
+		width: 5.5rem;
+		height: 2.23rem;
+		display: block;
+		margin:  0 auto;
+		background: url(../addons/wx_shop/template/mobile/default/static/images/img_new/btn_yqhy.png) no-repeat;
+		background-size: 100% 115%;
+		outline: none;
+		border: none;
+		color: #fff;
+		font-weight: bold;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 3%;
+	}
+	.colego_box{
+		width: 100%;
+		text-align: center;
+		color: #fff;
+		font-style: italic;
+		padding-top: 3rem;
+	}
+	.colego_box i{
+		font-size: 1.2rem;
+		/* font-weight: bold; */
+	}
+</style>
+<body>
+    <div class='fui-page  fui-page-current'>
+
+        <!-- <div class="fui-header">
+    
+            <div class="fui-header-left">
+    
+                <a class="back"></a>
+    
+            </div>
+    
+            <div class="title">系统消息</div>
+    
+            <div class="fui-header-right"></div>
+    
+        </div> -->
+        <div class="list_ul">
+            <!-- <div class="list_li flex flex-jcsb">
+                <img class="list_img" src="../addons/wx_shop/template/mobile/default/static/images/img_new/icon_message.png" alt="">
+                <div class="list_div flex flex-jcsb ">
+                    <span class="span_left ">
+                        <p>【公告】更新完成</p>
+                        <p>某某某内容</p>
+                    </span>
+                    <span class="span_right">
+                        <p>2019-12-27</p>
+                        <i class="red_dian"></i>
+                    </span>
+                </div>
+            </div> -->
+        </div>
+        <div class="zz_box">
+			<div class="zz_div">
+				<p class="zz_tili">系统公告</p>
+				<div class="text_div">
+
+
+				</div>
+				<button class="yes_btn">确定</button>
+			</div>
+			<div class="colego_box"><i class="iconfont icon-guanbi"></i></div>
+		</div>
+    
+    
+    </div>
+</body>
+<script  language='javascript'>
+	$(function(){
+		$('.colego_box .icon-guanbi').click(function(){
+			$('.zz_box').hide()
+		})
+        $('.back').click(function(){
+            window.android && android.goBack();
+            history.back(-1)
+        })
+		ajax_fun()
+		$('.list_ul').on('click','.list_li',function(){
+			var data_id = $(this).attr("data_id")
+			$(this).find('.red_dian').removeClass("display_box")
+			articleread(data_id)
+		})
+
+        function ajax_fun(){
+            var urltz = "../app/index.php?i=96&c=entry&m=wx_shop&do=mobile&r=game.game.articlelist"
+            $.ajax({
+                method: "POST",
+                url: urltz,
+                dataType: "json",
+                data: {
+					token: myui.cookie.getCookie('token'),
+					// token:"b76cfd6f076043746f59be1316ebafc4",
+                    article_category:"25"
+                },
+                success: function (data) {
+                        // console.log(data)
+						data_src(data.result.list)
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        }
+		function articleread(id){
+            
+            var urltz = "../app/index.php?i=96&c=entry&m=wx_shop&do=mobile&r=game.game.articleread"
+            $.ajax({
+                method: "POST",
+                url: urltz,
+                dataType: "json",
+                data: {
+					token:myui.cookie.getCookie('token'),
+					// token:"b76cfd6f076043746f59be1316ebafc4",
+					id:id
+                },
+                success: function (data) {
+					console.log(data)
+					$('.zz_box').show()
+					$('.text_div').html(data.result.article_content)
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        }
+
+		function data_src (data){
+			var html = "";
+			var status = ""
+			console.log(data)
+			for(var i=0;i<data.length;i++){
+				if(data[i].status==0){
+					status="display_box"
+				}else{
+					status=""
+				}
+				html+=`<div class="list_li flex flex-jcsb" data_id="${data[i].id}" status="${data[i].status}">
+						<img class="list_img" src="../addons/wx_shop/template/mobile/default/static/images/img_new/icon_message.png" alt="">
+						<div class="list_div flex flex-jcsb ">
+							<span class="span_left ">
+								<p>系统公告</p>
+								${data[i].article_content}
+							</span>
+							<span class="span_right">
+								<p>${data[i].article_date_v}</p>
+								<i class="red_dian ${status}"></i>
+							</span>
+						</div>
+					</div>`
+			}
+			$('.list_ul').html(html)
+		}
+	})
+
+
+</script>
+</html>
+
+
+

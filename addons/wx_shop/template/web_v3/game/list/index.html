@@ -1,0 +1,136 @@
+{template '_header'}
+
+<div class="page-header">当前位置：<span class="text-primary">游戏商品管理</span></div>
+
+<div class="page-content">
+
+    <form action="./index.php" method="get" class="form-horizontal form-search" role="form">
+        <input type="hidden" name="c" value="site" />
+        <input type="hidden" name="a" value="entry" />
+        <input type="hidden" name="m" value="wx_shop" />
+        <input type="hidden" name="do" value="web" />
+        <input type="hidden" name="r"  value="game.list" />
+
+        <div class="page-toolbar">
+            <div class="pull-left">
+                {ifp 'game.goods.add'}
+                    <a class='btn btn-primary btn-sm' href="{php echo webUrl('game/list/add')}"><i class='fa fa-plus'></i> 添加游戏商品</a>
+                {/if}
+            </div>
+            <div class="pull-right col-md-6">
+                <div class="input-group">
+                    <div class="input-group-select">
+                        <select name="enabled" class='form-control'>
+                            <option value="" {if $_GPC['enabled'] == ''} selected{/if}>状态</option>
+                            <option value="1" {if $_GPC['enabled']== '1'} selected{/if}>启用</option>
+                            <option value="0" {if $_GPC['enabled'] == '0'} selected{/if}>禁用</option>
+                        </select>
+                    </div>
+                    <input type="text" class=" form-control" name='keyword' value="{$_GPC['keyword']}" placeholder="请输入关键词">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit"> 搜索</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {if empty($list)}
+        <div class="panel panel-default">
+            <div class="panel-body empty-data">未查询到相关数据</div>
+        </div>
+    {else}
+        <form action="" method="post" >
+            <div class="page-table-header">
+                <input type="checkbox">
+                <div class="btn-group">
+                    {ifp 'game.goods.delete'}
+                    <!-- <button class="btn btn-default btn-sm btn-operation" type="button" data-toggle='batch-remove' data-confirm="确认要删除?" data-href="{php echo webUrl('game/list/delete')}"><i class='icow icow-shanchu1'></i> 删除</button> -->
+                    {/if}
+                </div>
+            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:25px;"></th>
+                        <th style="width:60px;">等级</th>
+                        <th>名称</th>
+                        <th>可购买头像</th>
+                        <th>未解锁头像</th>
+                        <th>金币购买</th>
+                        <th>彩蛋币购买</th>
+                        <th>收益信息</th>
+                        <th>凤凰信息</th>
+                        <th style="width: 95px">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                        <tr {if $row['id']=='default'}style='background:#eee;{if !empty($_GPC['keyword'])}display:none;{/if}'{/if}>
+                            <td>{if $row['id']!='default'}<input type='checkbox'   value="{$row['id']}"/>{/if}</td>
+                            <td>{if $row['id']=='default'}--{else}{$row['level']}{/if}</td>
+                            <td>{$row['goodsname']}</td>
+                            <td><img class="img-40" src="{php echo tomedia($row['img'])}" style='border-radius:50%;border:1px solid #efefef;' />
+                            </td>
+                            <td><img class="img-40" src="{php echo tomedia($row['img_w'])}" style='border-radius:50%;border:1px solid #efefef;' />
+                            </td> 
+
+                            <td>购买金币:<span class="text-warning">{$row['money']} </span>
+                                <br>金币增幅比例:<span class="text-warning">{$row['money_z']} </span>
+                                <br>金币封顶:<span class="text-warning">{$row['money_max']} </span>
+                            </td>
+
+                            <td>购买彩蛋币:<span class="text-warning">{$row['b_money']} </span>
+                                <br>彩蛋币增幅比例:<span class="text-warning">{$row['b_money_z']} </span>
+                                <br>彩蛋币封顶:<span class="text-warning">{$row['b_money_max']} </span>
+                            </td>
+
+                             <td>金币产出:<span class="text-warning">{$row['income']} </span>
+                                <br>离线产出:<span class="text-warning">{$row['lx_income']} </span>
+
+                                <br>回收价格:<span class="text-warning">{$row['receive']} </span>
+                                <br>赠送红包最大值:<span class="text-warning">{$row['red_max']} </span>
+                                <br>赠送红包最小值:<span class="text-warning">{$row['red_min']} </span>
+                            </td>
+
+                            <td>合成概率:<span class="text-warning">{$row['gl']} </span>%
+                                <br>回收彩蛋币:<span class="text-warning">{$row['credit_b']} </span>
+                                <br>回收红包:<span class="text-warning">{$row['credit_red']} </span>
+                                <br>回收转盘券:<span class="text-warning">{$row['dzp']} </span>
+                            </td>
+                            
+                            <td>
+                                {ifp 'game.goods.view|member.level.edit'}
+                                    <a href="{php echo webUrl('game/list/edit', array('id' => $row['id']))}" class="btn btn-op btn-operation">
+                                        <span data-toggle="tooltip" data-placement="top" data-original-title="{ifp 'game.goods.edit'}修改{else}查看{/if}">
+                                                <i class='icow icow-bianji2'></i>
+                                            </span>
+                                    </a>
+                                {/if}
+                            </td>
+                        </tr>
+                    {/loop}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td colspan="2">
+                            <div class="btn-group">
+                                {ifp 'game.goods.delete'}
+                                    <!-- <button class="btn btn-default btn-sm btn-operation" type="button" data-toggle='batch-remove' data-confirm="确认要删除?" data-href="{php echo webUrl('game/list/delete')}"><i class='icow icow-shanchu1'></i> 删除</button> -->
+                                {/if}
+                            </div>
+                        </td>
+                        <td colspan="4" style="text-align: right">
+                            <span class="pull-right" style="line-height: 28px;">(共{php echo count($list)}条记录)</span>
+                            {$pager}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    {/if}
+</div>
+
+{template '_footer'}
+

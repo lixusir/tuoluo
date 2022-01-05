@@ -1,0 +1,324 @@
+{template 'common/header-base'}
+<style>
+.login-center{
+	width: 100%;
+	height: 540px;
+	margin-top: 80px;
+}
+.login-center-box{
+	width: 1000px;
+	height: 540px;
+	margin: auto;
+}
+.login-center-box .login-image{
+	width: 500px;
+	height: 540px;
+	float: left;
+}
+.login-center-box .login-panel{
+	float: right;
+}
+.slideShow{
+	width: 100%;
+	height: 100%;     /*其实就是图片的高度*/
+	position: relative;
+	overflow: hidden;    /*此处需要将溢出框架的图片部分隐藏*/
+}
+.slideShow ul{
+    width: 300%;
+    height: 100%;
+    position: relative;     /*此处需注意relative : 对象不可层叠，但将依据left，right，top，bottom等属性在正常文档流中偏移位置，如果没有这个属性，图片将不可左右移动*/
+}
+.slideShow ul li{
+    float: left;     /*让四张图片左浮动，形成并排的横着布局，方便点击按钮时的左移动*/
+    width: 33.333%;
+    height: 100%;
+
+}
+.slideShow ul li img{
+    height: 100%;
+        width: 100%;
+}
+.slideShow .showNav{     /*用绝对定位给数字按钮进行布局*/
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    text-align:center;
+    font-size: 12px;
+    	line-height: 20px;
+    margin-left: -45px;
+}
+.slideShow .showNav span{
+    cursor: pointer;
+    display: block;
+    border-radius: 50%;
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: #f5f5f5;
+    margin-left: 10px;
+	color: #fff;
+}
+.slideShow .showNav .active{
+    background: #ccc;
+}
+
+.login-input-i{
+	width: 34px;
+    background: url(./zhanghao.png);
+    height: 35px;
+    z-index: 1000;
+    display: inline-block;
+	position: absolute;
+    top: 9px;
+}
+.login-input-ii{
+	width: 34px;
+    background: url(./mima.png);
+    height: 37px;
+    z-index: 1000;
+    display: inline-block;
+    position: absolute;
+    top: 56%;
+}
+.input-group-vertical{
+	width: 315px;
+	height: 156px;
+	margin: auto;
+	position: relative;
+}
+.login-input-i{
+	position: absolute;
+	top: 14px;
+}
+.login-input-ii{
+	position: absolute;
+	bottom: 30px;
+}
+.form-inline{
+	width: 315px;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+.login-submit{
+	width: 315px;
+	margin: auto;
+}
+.login-submit .btn-block{
+	margin-left: 30px;
+}
+.text-right .color-default{
+	height: 40px;
+	border: 1px solid #428bca;
+	color: #428bca !important;
+	margin-right: 33px;
+}
+.form-control {
+	margin-top: 15px;
+}
+
+input::input-placeholder{color:#a9a9a9!important; font-size: 14px} 
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+color: #a9a9a9!important; font-size: 14px
+} 
+input:-moz-placeholder, textarea:-moz-placeholder { 
+color: #a9a9a9!important; font-size: 14px
+} s
+input::-moz-placeholder, textarea::-moz-placeholder { 
+color: #a9a9a9!important; font-size: 14px
+} 
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+color: #a9a9a9!important; font-size: 14px
+}  
+</style>
+<div class="system-login" {if !empty($_W['setting']['copyright']['background_img'])} style="background-image:url('{php echo tomedia($_W['setting']['copyright']['background_img']);}')" {else} style="background-image: url('./resource/images/gw-bg.jpg');" {/if}>
+
+	<div class="head">
+		<a href="/" class="logo-version">
+			<img src="{if !empty($_W['setting']['copyright']['blogo'])}{php echo tomedia($_W['setting']['copyright']['blogo'])}{else}./resource/images/logo/logo.png{/if}" class="logo">
+			<span class="version hidden">{IMS_VERSION}</span>
+		</a>
+		{if !empty($_W['setting']['copyright']['showhomepage'])}
+		<a href="{php echo url('account/welcome')}" class="pull-right">首页</a>
+		{/if}
+	</div>
+	
+	<div class="login-center">
+	<div class="login-center-box">
+		<div class="login-image">
+			<div class="slideShow">
+				<!--图片布局开始-->
+				<ul>
+					<li><a href="javascript:;"><img src="./lunbo1.jpg" /></a></li>
+					<li><a href="javascript:;"><img src="./lunbo1.jpg"  /></a></li>
+					<li><a href="javascript:;"><img src="./lunbo1.jpg" /></a></li>
+				</ul>
+				<!--图片布局结束-->
+		
+				<!--按钮布局开始-->
+				<div class="showNav">
+					<span class="active"></span>
+					<span></span>
+					<span></span>
+				</div>
+				<!--按钮布局结束-->
+			</div>
+		</div>
+		<div class="login-panel">
+			<div class="title">
+				<a href="{php echo url('user/login', array('login_type' => 'system'))}" {if empty($_GPC['login_type']) || $_GPC['login_type'] == 'system'}class="active" {/if}>账号登陆</a>
+				{if !empty($_W['setting']['copyright']['mobile_status'])}
+				<a href="{php echo url('user/login', array('login_type' => 'mobile'))}" {if $_GPC['login_type'] == 'mobile'}class="active" {/if}>手机</a>
+				{/if}
+			</div>
+			<form action="" method="post" role="form" id="form1" onsubmit="return formcheck();" class="we7-form" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+				{if empty($_GPC['login_type']) || $_GPC['login_type'] == 'system'}
+				<div class="input-group-vertical" style="position: relative;width:315px">
+					<input name="login_type" type="hidden" class="form-control " value="system">
+					<i class="login-input-i" > </i>
+					<input name="username" type="text" class="form-control " placeholder="请输入用户名" >
+					<i class="login-input-ii"> </i>
+					<input name="password" type="password" class="form-control password" placeholder="请输入密码" >
+					{if !empty($_W['setting']['copyright']['verifycode'])}
+					<div class="input-group">
+						<input name="verify" type="text" class="form-control" placeholder="请输入验证码">
+						<a href="javascript:;" id="toggle" class="input-group-btn imgverify"><img id="imgverify" src="{php echo url('utility/code')}" title="点击图片更换验证码" /></a>
+					</div>
+					{/if}
+				</div>
+				{/if}
+				{if $_GPC['login_type'] == 'mobile'}
+				<div class="input-group-vertical">
+					<input name="login_type" type="hidden" class="form-control " value="mobile">
+					<input name="username" type="text" class="form-control " placeholder="请输入手机号登录">
+					<input name="password" type="password" class="form-control password" placeholder="请输入登录密码">
+					{if !empty($_W['setting']['copyright']['verifycode'])}
+					<div class="input-group">
+						<input name="verify" type="text" class="form-control" placeholder="请输入验证码">
+						<a href="javascript:;" id="toggle" class="input-group-btn imgverify"><img id="imgverify" src="{php echo url('utility/code')}" title="点击图片更换验证码" /></a>
+					</div>
+					{/if}
+				</div>
+				{/if}
+				<div class="form-inline" style="margin-top: 10px;margin-bottom: 30px;width: 315px;"> 
+					<div class="pull-right">
+						<a href="{url 'user/find-password'}" target="_blank" class="color-default">忘记密码？</a>
+					</div>
+					<div class="checkbox">
+						<input type="checkbox" value="true" id="rember" name="rember">
+						<label for="rember">记住密码</label>	
+					</div>
+				</div>
+				<div class="login-submit text-center">
+					<input type="submit" id="submit" name="submit" value="登录" ng-click="updateCache()" class="btn  btn-block" style="    background-color: #428bca;color: white;" />
+					<div class="text-right">
+						{if !$_W['siteclose'] && $setting['register']['open']}
+							{if empty($_GPC['login_type']) || $_GPC['login_type'] == 'system'}
+							<a href="{url 'user/register'}" class="color-default btn" style="height: 40px;border: 1px solid #428bca;;display: inline-block; color:#428bca !important">立即注册</a>
+							{/if}
+							{if $_GPC['login_type'] == 'mobile'}
+							<a href="{php echo url('user/register', array('register_type' => 'mobile'))}" class="color-default btn" style="height: 40px;border: 1px solid #428bca;;display: inline-block; color:#428bca !important">立即注册</a>
+							{/if}
+						{/if}
+					</div>
+					<input name="token" value="{$_W['token']}" type="hidden" />
+				</div>
+				{if !empty($setting['thirdlogin']['qq']['authstate']) || !empty($setting['thirdlogin']['wechat']['authstate'])}
+				<div class="text-center">
+					<span class="color-gray">使用第三方账号登录</span>
+					<div class="form-control-static">
+						{if !empty($setting['thirdlogin']['qq']['authstate'])}<a href="{$login_urls['qq']}"><img src="./resource/images/qqlogin.png" width="35px"></a>&nbsp;&nbsp;{/if}
+						{if !empty($setting['thirdlogin']['wechat']['authstate'])}<a href="{$login_urls['wechat']}"><img src="./resource/images/wxlogin.png" width="35px"></a>{/if}
+					</div>
+				</div>
+				{/if}
+			</form>
+		</div>
+	</div>
+	</div>
+</div>
+{template 'common/footer-base'}
+<script src="./jquery-1.7.2.min.js"></script>
+
+<script>
+    angular.bootstrap($("#js-system-updatecache"), ['systemApp']);
+</script>
+
+<script>
+function formcheck() {
+	if($('#remember:checked').length == 1) {
+		cookie.set('remember-username', $(':text[name="username"]').val());
+	} else {
+		cookie.del('remember-username');
+	}
+	return true;
+}
+var h = document.documentElement.clientHeight;
+$(".system-login").css('height',h);
+$('#toggle').click(function() {
+	$('#imgverify').prop('src', '{php echo url('utility/code')}r='+Math.round(new Date().getTime()));
+	return false;
+});
+{if !empty($_W['setting']['copyright']['verifycode'])}
+	$('#form1').submit(function() {
+		var verify = $(':text[name="verify"]').val();
+		if (verify == '') {
+			alert('请填写验证码');
+			return false;
+		}
+	});
+{/if}
+
+$(document).ready(function(){
+
+var slideShow=$(".slideShow"),                                                                    //获取最外层框架的名称
+
+	ul=slideShow.find("ul"),
+
+	showNumber=slideShow.find(".showNav span"),                                              //获取按钮
+
+	oneWidth=slideShow.find("ul li").eq(0).width();                                        //获取每个图片的宽度
+
+var timer=null;                                                                                     //定时器返回值，主要用于关闭定时器
+
+var iNow=0;                                                                                         //iNow为正在展示的图片索引值，当用户打开网页时首先显示第一张图，即索引值为0
+
+showNumber.on("click",function(){                                                      //为每个按钮绑定一个点击事件
+
+	$(this).addClass("active").siblings().removeClass("active");                  //按钮点击时为这个按钮添加高亮状态，并且将其他按钮高亮状态去掉
+
+	var index=$(this).index();                                                                //获取哪个按钮被点击，也就是找到被点击按钮的索引值
+
+	iNow=index;
+
+	ul.animate({    "left":-oneWidth*iNow,                               //注意此处用到left属性，所以ul的样式里面需要设置position: relative; 让ul左移N个图片大小的宽度，N根据被点击的按钮索引值iNOWx确定
+
+	})
+
+});
+
+function autoplay(){
+
+	timer=setInterval(function(){                                              //打开定时器
+
+		iNow++;                                                                         //让图片的索引值次序加1，这样就可以实现顺序轮播图片
+
+		if(iNow>showNumber.length-1){                                      //当到达最后一张图的时候，让iNow赋值为第一张图的索引值，轮播效果跳转到第一张图重新开始
+
+			iNow=0; }
+
+		showNumber.eq(iNow).trigger("click");                                  //模拟触发数字按钮的click
+
+	},3000);                                                                      //2000为轮播的时间
+
+}
+
+autoplay();
+
+slideShow.hover( function(){clearInterval(timer);},autoplay);
+
+
+})
+</script>

@@ -1,0 +1,771 @@
+{template '_header'}
+
+
+
+<div class="page-header">当前位置：<span class="text-primary">设置</span></div>
+
+
+
+<div class="page-content">
+
+
+
+<form {ifp 'game.set.edit'}action="" method="post"{/if} class='form-horizontal form-validate'>
+
+    <div class="form-group-title">设置</div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">全网神鸟总数</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="sn_zong" class="form-control" value="{$item['sn_zong']}"/>
+
+
+            {else}
+
+            <div class='form-control-static'>{$item['sn_zong']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">下载链接</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="xz_lj" class="form-control" value="{$item['xz_lj']}"/>
+
+
+            {else}
+
+            <div class='form-control-static'>{$item['xz_lj']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">分享链接</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="fx_lj" class="form-control" value="{$item['fx_lj']}"/>
+
+
+            {else}
+
+            <div class='form-control-static'>{$item['fx_lj']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">分享说明</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="fx_sm" class="form-control" value="{$item['fx_sm']}"/>
+
+
+            {else}
+
+            <div class='form-control-static'>{$item['fx_sm']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">观看视频奖励</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="gg_money" class="form-control" value="{$item['gg_money']}"/>
+
+            <span class='help-block'>如果不填写，默认0，观看一次视频计算收益的基数</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['gg_money']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">大转盘比例</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="dzp_bili" class="form-control" value="{$item['dzp_bili']}"/>%
+
+            <span class='help-block'>设置观看视频大转盘奖金池比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['dzp_bili']}</div>%
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">大转盘奖金池基数</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="dzp_zong" class="form-control" value="{$item['dzp_zong']}"/>
+
+            <span class='help-block'>大转盘奖金池基数</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['dzp_zong']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+     <div class="form-group">
+
+        <label class="col-lg control-label">营销比例</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="yx_bili" class="form-control" value="{$item['yx_bili']}"/>%
+
+            <span class='help-block'>设置观看视频营销奖金池比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['yx_bili']}</div>%
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">营销奖金池基数</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="yx_zong" class="form-control" value="{$item['yx_zong']}"/>
+
+            <span class='help-block'>营销奖金池基数(会员合成发放红包)</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['yx_zong']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">分销一级</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="fx_one" class="form-control" value="{$item['fx_one']}"/>%
+
+            <span class='help-block'>如果不填写，默认0，徒弟活跃收益比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['fx_one']}%</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">分销二级</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="fx_two" class="form-control" value="{$item['fx_two']}"/>%
+
+            <span class='help-block'>如果不填写，默认0，徒孙活跃收益比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['fx_two']}%</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">神鸟比例</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="sn_bili" class="form-control" value="{$item['sn_bili']}"/>%
+
+            <span class='help-block'>自己拥有神鸟奖励比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['sn_bili']}%</div>
+
+            {/if}
+
+        </div>
+
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">分红一级</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="fh_one" class="form-control" value="{$item['fh_one']}"/>%
+
+            <span class='help-block'>如果不填写，默认0，徒弟有鸟同享比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['fh_one']}%</div>
+
+            {/if}
+
+        </div>
+
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">分红二级</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="fh_two" class="form-control" value="{$item['fh_two']}"/>%
+
+            <span class='help-block'>如果不填写，默认0，徒孙有鸟同享比例</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['fh_two']}%</div>
+
+            {/if}
+
+        </div>
+
+
+    </div>
+
+
+     <div class="form-group">
+
+        <label class="col-lg control-label">答题二关</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="dt_two" class="form-control" value="{$item['dt_two']}"/>
+
+            <span class='help-block'>如果不填写，默认0，答题关卡2 过关赠送彩蛋数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['dt_two']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+     <div class="form-group">
+
+        <label class="col-lg control-label">答题一关</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="dt_one" class="form-control" value="{$item['dt_one']}"/>
+
+            <span class='help-block'>如果不填写，默认0，答题关卡1 过关赠送彩蛋数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['dt_one']}，</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">签到奖励</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="qd_money" class="form-control" value="{$item['qd_money']}"/>
+
+            <span class='help-block'>如果不填写，默认0</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['qd_money']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">绑定微信奖励</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="wxbind" class="form-control" value="{$item['wxbind']}"/>
+
+            <span class='help-block'>如果不填写，默认0，绑定微信赠送彩蛋数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['wxbind']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">认证奖励</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rz" class="form-control" value="{$item['rz']}"/>
+
+            <span class='help-block'>如果不填写，默认0，实名认证赠送彩蛋数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rz']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">认证等级</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rz_level" class="form-control" value="{$item['rz_level']}"/>
+
+            <span class='help-block'>徒弟达到等级</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rz_level']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+     <div class="form-group">
+
+        <label class="col-lg control-label">认证奖励上级彩蛋币</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rz_1" class="form-control" value="{$item['rz_1']}"/>
+
+            <span class='help-block'>如果不填写，默认0，有效会员赠送师父彩蛋数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rz_1']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">认证奖励上级邀请券</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rz_2" class="form-control" value="{$item['rz_2']}"/>
+
+            <span class='help-block'>如果不填写，默认0，有效会员赠送师父邀请券数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rz_2']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">认证奖励上级最大上限</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rz_max" class="form-control" value="{$item['rz_max']}"/>
+
+            <span class='help-block'>如果不填写，默认0，师父每天邀请徒弟上限数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rz_max']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">认证奖励上上级最大上限</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rzs_max" class="form-control" value="{$item['rzs_max']}"/>
+
+            <span class='help-block'>如果不填写，默认0，师公每天邀请徒孙上限数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rzs_max']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">认证奖励上上级彩蛋币</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="rzs_1" class="form-control" value="{$item['rzs_1']}"/>
+
+            <span class='help-block'>如果不填写，默认0，有效会员赠送师公彩蛋数量</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['rzs_1']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">提现设置</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="tx_moneys" class="form-control" value="{$item['tx_moneys']}"/>
+
+            <span class='help-block'>默认六个框,用;区分</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['tx_moneys']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">提现手续费</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="tx_sxf" class="form-control" value="{$item['tx_sxf']}"/>%
+
+            <span class='help-block'>如果不填写，默认0</span>
+
+            {else}
+
+            <div class='form-control-static'>{$item['tx_sxf']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">提现说明</label>
+
+        <div class="col-sm-9 col-xs-12">
+
+            {ifp 'game.set.edit'}
+
+            <input type="text" name="tx_sm" class="form-control" value="{$item['tx_sm']}"/>
+
+
+            {else}
+
+            <div class='form-control-static'>{$item['tx_sm']}</div>
+
+            {/if}
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg control-label">社区图片</label>
+        <div class="col-sm-9 col-xs-12 detail-logo">
+            {ife 'game.set.add' $item}
+            {php echo tpl_form_field_image2('img_sq', $item['img_sq'])}
+            <span class="help-block">建议尺寸: 100 * 100 ，或正方型图片 </span>
+            {else}
+            {if !empty($item['img_sq'])}
+            <a href='{php echo tomedia($item['img_sq'])}' target='_blank'>
+            <img src="{php echo tomedia($item['img_sq'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+            </a>
+            {/if}
+            {/if}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg control-label">分销图片</label>
+        <div class="col-sm-9 col-xs-12 detail-logo">
+            {ife 'game.set.add' $item}
+            {php echo tpl_form_field_image2('fx_img', $item['fx_img'])}
+            <span class="help-block">建议尺寸: 600 * 400 ，或长方型图片 </span>
+            {else}
+            {if !empty($item['fx_img'])}
+            <a href='{php echo tomedia($item['fx_img'])}' target='_blank'>
+            <img src="{php echo tomedia($item['fx_img'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+            </a>
+            {/if}
+            {/if}
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg control-label">称号图片</label>
+        <div class="col-sm-9 col-xs-12 detail-logo">
+            {ife 'game.set.add' $item}
+            {php echo tpl_form_field_image2('ch_img', $item['ch_img'])}
+            <span class="help-block">建议尺寸: 600 * 400 ，或长方型图片 </span>
+            {else}
+            {if !empty($item['ch_img'])}
+            <a href='{php echo tomedia($item['ch_img'])}' target='_blank'>
+            <img src="{php echo tomedia($item['ch_img'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+            </a>
+            {/if}
+            {/if}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg control-label">客服图片</label>
+        <div class="col-sm-9 col-xs-12 detail-logo">
+            {ife 'game.set.add' $item}
+            {php echo tpl_form_field_image2('kefu', $item['kefu'])}
+            <span class="help-block">建议尺寸: 100 * 100 ，或正方型图片 </span>
+            {else}
+            {if !empty($item['kefu'])}
+            <a href='{php echo tomedia($item['kefu'])}' target='_blank'>
+            <img src="{php echo tomedia($item['kefu'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+            </a>
+            {/if}
+            {/if}
+        </div>
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg control-label">卡片稿子图片</label>
+
+        <div class="col-sm-9 col-xs-12 gimgs">
+
+            {ife 'game' $item}
+
+                {php echo tpl_form_field_multi_image2('gaozi',$piclist)}
+
+
+            {else}
+
+            {loop $piclist $p}
+
+            <a href='{php echo tomedia($p)}' target='_blank'>
+
+                <img src="{php echo tomedia($p)}" style='height:100px;border:1px solid #ccc;padding:1px;float:left;margin-right:5px;' />
+
+            </a>
+
+            {/loop}
+
+            {/if}
+
+        </div>
+
+    </div>
+
+
+    {ifp 'game.set.edit'}
+
+    <div class="form-group" style="margin-top:80px;">
+
+        <label class="col-lg control-label"></label>
+
+        <input type="submit" class="btn btn-primary" value="保存">
+
+    </div>
+
+    {/if}
+
+</form>
+
+
+
+</div>
+
+
+
+{template '_footer'}
+

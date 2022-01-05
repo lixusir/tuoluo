@@ -1,0 +1,192 @@
+<div class="form-group">
+    <label class="col-lg control-label">分销等级说明链接</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'commission.set.edit'}
+        <input type="text" name="data[levelurl]" class="form-control" value="{$data['levelurl']}"/>
+        <span class="help-block">分销等级说明链接</span>
+        {else}
+        {$data['levelurl']}
+        {/if}
+        <span class="help-block">
+            <label class="radio radio-inline" style="width:240px">
+                <input class="levelcondition" type="radio" name="levelcondition" value="0" {if empty($data['leveltype'])||!strexists($data['leveltype'],'_')&&!strexists($data['leveltype'],'&')}checked{/if}/>
+                单一条件
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input  class="levelcondition" type="radio" name="levelcondition" value="1" {if strexists($data['leveltype'],'_')}checked{/if}/>
+                满足其中一个
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input class="levelcondition" type="radio" name="levelcondition" value="2" {if strexists($data['leveltype'],'&')}checked{/if}/>
+                同时满足多个条件
+            </label>
+        </span>
+    </div>
+</div>
+<div class="form-group form-group-level" style="{if strexists($data['leveltype'],'_')||strexists($data['leveltype'],'&')}display:none;{/if}">
+
+    <label class="col-lg control-label">分销商等级升级依据</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'commission.set.edit'}
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="0" {if empty($data['leveltype'])}checked{/if}/>
+                分销订单总额(完成的订单)
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="1" {if $data['leveltype']==1}checked{/if}/>
+                一级分销订单金额(完成的订单)
+            </label>
+
+            <br/>
+
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="2" {if $data['leveltype']==2}checked{/if}/>
+                分销订单总数(完成的订单)
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="3" {if $data['leveltype']==3}checked{/if}/>
+                一级分销订单总数(完成的订单)
+            </label>
+        </div>
+
+
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="4" {if $data['leveltype']==4}checked{/if}/>
+                自购订单金额(完成的订单)
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="5" {if $data['leveltype']==5}checked{/if}/>
+                自购订单数量(完成的订单)
+            </label>
+        </div>
+
+
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="6" {if $data['leveltype']==6}checked{/if}/>
+                下线总人数（分销商+非分销商）
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="7" {if $data['leveltype']==7}checked{/if}/>
+                一级下线人数（分销商+非分销商）
+            </label>
+            <br/>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="8" {if $data['leveltype']==8}checked{/if}/> 下级分销商总人数
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="9" {if $data['leveltype']==9}checked{/if}/> 一级分销商人数
+            </label>
+        </div>
+
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="radio" name="data[leveltype]" value="10" {if $data['leveltype']==10}checked{/if}/> 已提现佣金总金额
+            </label>
+        </div>
+        <span class="help-block">默认为分销订单总金额</span>
+        {else}
+        {if empty($data['leveltype'])}{/if}
+        {if $data['leveltype']==1}分销订单总额(完成的订单){/if}
+        {if $data['leveltype']==2}一级分销订单金额(完成的订单){/if}
+        {if $data['leveltype']==3}一级分销订单总数(完成的订单){/if}
+        {if $data['leveltype']==4}自购订单金额(完成的订单){/if}
+        {if $data['leveltype']==5}自购订单数量(完成的订单){/if}
+        {if $data['leveltype']==6}下线总人数（分销商+非分销商）{/if}
+        {if $data['leveltype']==7}一级下线人数（分销商+非分销商）{/if}
+        {if $data['leveltype']==8}下级分销商总人数{/if}
+        {if $data['leveltype']==9}一级分销商人数{/if}
+        {if $data['leveltype']==10}已提现佣金总金额{/if}
+        {/if}
+    </div>
+</div>
+
+
+<!--多条件组合-->
+<div style="{if !strexists($data['leveltype'],'_')&&!strexists($data['leveltype'],'&')}display:none;{/if}" class="form-group form-group-level">
+    <label class="col-lg control-label">分销商等级升级依据</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'commission.set.edit'}
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="0" {if strexists($data['leveltype'],'0')}checked{/if}/>
+                分销订单总额(完成的订单)
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="1" {if strexists($data['leveltype'],'1')}checked{/if}/>
+                一级分销订单金额(完成的订单)
+            </label>
+
+            <br/>
+
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="2" {if strexists($data['leveltype'],'2')}checked{/if}/>
+                分销订单总数(完成的订单)
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="3" {if strexists($data['leveltype'],'3')}checked{/if}/>
+                一级分销订单总数(完成的订单)
+            </label>
+        </div>
+
+
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="4" {if strexists($data['leveltype'],'4')}checked{/if}/>
+                自购订单金额(完成的订单)
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="5" {if strexists($data['leveltype'],'5')}checked{/if}/>
+                自购订单数量(完成的订单)
+            </label>
+        </div>
+
+
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="6" {if strexists($data['leveltype'],'6')}checked{/if}/>
+                下线总人数（分销商+非分销商）
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="7" {if strexists($data['leveltype'],'7')}checked{/if}/>
+                一级下线人数（分销商+非分销商）
+            </label>
+            <br/>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="8" {if strexists($data['leveltype'],'8')}checked{/if}/> 下级分销商总人数
+            </label>
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="9" {if strexists($data['leveltype'],'9')}checked{/if}/> 一级分销商人数
+            </label>
+        </div>
+
+        <div style="background: #f5f7f9;width: 520px;padding: 10px;margin-top: 10px">
+            <label class="radio radio-inline" style="width:240px">
+                <input type="checkbox" name="leveltypes[]" value="10" {if strexists($data['leveltype'],'10')}checked{/if}/> 已提现佣金总金额
+            </label>
+        </div>
+        <span class="help-block">默认为分销订单总金额</span>
+        {else}
+        {if empty($data['leveltype'])}{/if}
+        {if $data['leveltype']==1}分销订单总额(完成的订单){/if}
+        {if $data['leveltype']==2}一级分销订单金额(完成的订单){/if}
+        {if $data['leveltype']==3}一级分销订单总数(完成的订单){/if}
+        {if $data['leveltype']==4}自购订单金额(完成的订单){/if}
+        {if $data['leveltype']==5}自购订单数量(完成的订单){/if}
+        {if $data['leveltype']==6}下线总人数（分销商+非分销商）{/if}
+        {if $data['leveltype']==7}一级下线人数（分销商+非分销商）{/if}
+        {if $data['leveltype']==8}下级分销商总人数{/if}
+        {if $data['leveltype']==9}一级分销商人数{/if}
+        {if $data['leveltype']==10}已提现佣金总金额{/if}
+        {/if}
+    </div>
+</div>
+<script>
+$('.levelcondition').on('change',function (e) {
+    var box=$('.form-group-level');
+    var index=e.currentTarget.defaultValue
+    index>0?(box.eq(1).css('display','block'),box.eq(0).css('display','none')):(box.eq(0).css('display','block'),box.eq(1).css('display','none'))
+})
+</script>

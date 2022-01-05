@@ -1,0 +1,69 @@
+{template '_header'}
+<form {ifp 'sysset.sms.set'}method="post"{/if} class="form-horizontal form-validate">
+
+<div class="page-header">
+
+    当前位置：<span class="text-primary">短信提醒</span>
+</div>
+<div class="page-content">
+
+    <div class="form-group-title">高速短信
+        <!--<small style="padding-left: 10px;">-->
+            <!--<a class="text-primary" target="_blank" href="http://www.17int.cn">立即申请</a>-->
+        <!--</small>-->
+        <span class="pull-right">
+            <input type="hidden" value="{$item['aliyun']}" name='xiangxun'/>
+            <input class="js-switch small" type="checkbox" {if !empty($item)}checked{/if}/>
+        </span>
+    </div>
+    <div class=" sms-xiangxun">
+        <div class="form-group">
+            <label class="col-lg control-label must">account</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" name="account" class="form-control valid" value="{$item['account']}"
+                       data-rule-required="true">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg control-label must">password</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" name="password" class="form-control valid" value="{$item['password']}"
+                       data-rule-required="true">
+            </div>
+        </div>
+    </div>
+
+    <div class='input-group'>
+        <label class="col-lg control-label"></label>
+        {ifp 'sysset.sms.set'}
+        <span class="">
+                    <input type="submit" value="保存" class="btn btn-primary ">
+                </span>
+        {/if}
+    </div>
+</div>
+
+</form>
+
+<script>
+    $(function () {
+        $(".js-switch").click(function () {
+            $(this).prev().val(this.checked ? 1 : 0);
+            var smsname = $(this).prev().attr('name');
+            if (this.checked) {
+                $(".sms-" + smsname).show();
+            } else {
+                $(".sms-" + smsname).hide();
+            }
+        });
+        $.post("{php echo webUrl('sysset/sms/getnum')}", function (r) {
+            if (r.status && r.result) {
+                $.each(r.result, function (type, num) {
+                    $("#num_" + type).text(num);
+                })
+            }
+        }, 'json');
+    });
+</script>
+{template '_footer'}

@@ -1,0 +1,276 @@
+{template '_header'}
+
+<style>
+
+    .style i{
+
+        vertical-align: middle;
+
+    }
+
+</style>
+
+<div class="page-header">当前位置：<span class="text-primary">视频记录</span></div>
+
+<div class="page-content">
+
+    <form action="./index.php" method="get" class="form-horizontal table-search" role="form" id="form1">
+
+        <input type="hidden" name="c" value="site" />
+
+        <input type="hidden" name="a" value="entry" />
+
+        <input type="hidden" name="m" value="wx_shop" />
+
+        <input type="hidden" name="do" value="web" />
+
+        <input type="hidden" name="r" value="game.videolog" />
+
+        <div class="page-toolbar">
+
+            <span class="pull-left">
+
+                    {php echo tpl_daterange('time', array('sm'=>true,'placeholder'=>'时间'),true);}
+
+                </span>
+
+            <div class="input-group">
+
+
+
+                <!-- <span class="input-group-select">
+
+                    {if $_GPC['type']==0}
+
+                    <select name="paytype" class="form-control" style="width:100px;"  >
+
+                        <option value='' {if $_GPC['paytype']==''}selected{/if}>类型</option>
+
+                        {loop $paytype $k $v}
+                        <option value="{$v}" {if $_GPC['paytype']==$v}selected{/if}>{$k}</option>
+                        {/loop}
+
+                    </select>
+
+                    {/if}
+
+                </span> -->
+
+
+                <input type="text" class="form-control"  name="keyword" value="{$_GPC['keyword']}" placeholder="会员id/手机号码/昵称" />
+
+                <span class="input-group-btn">
+
+                    <button class="btn  btn-primary" type="submit"> 搜索</button>
+
+                    {ifp 'game.videolog.videolog.export'}
+
+                        <!-- <button type="submit" name="export" value="1" class="btn btn-success ">导出</button> -->
+
+                    {/if}
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    {if empty($list)}
+
+    <div class="panel panel-default">
+
+        <div class="panel-body empty-data">未查询到相关数据</div>
+
+    </div>
+
+    {else}
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <table class="table">
+
+                <thead>
+
+                <tr>
+
+                    
+                    <!-- <th style='text-align: center;width:200px;'>id</th> -->
+                    
+                    <th style='text-align: center;width:200px;'>时间</th>
+
+                    <th style='text-align: center;width:200px;'>状态</th>
+
+                    <th style='text-align: center;width:200px;'>全网广告收益</th>
+                    
+                    <th style='text-align: center;width:200px;'>神鸟分红比例</th>
+                    
+                    <th style='text-align: center;width:200px;'>神鸟用户</th>
+                    
+                    <th style='text-align: center;width:200px;'>神鸟分红</th>
+
+                    
+                    <th style='text-align: center;width:200px;'>详细信息</th>
+
+
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {loop $item $row}
+
+                <tr>
+
+                    <td style='text-align: center;'>{php echo date("Y-m-d",$row['time_jr'])}</td>
+                   
+                    <!-- <td style='text-align: center;'>{$row['id']}</td> -->
+
+                    <td style='text-align: center;'>
+
+                        {if $row['status'] ==1}
+                            已发放
+                        {else}
+                            未发放
+                        {/if}
+
+
+                    </td>
+
+                    <td style="text-align: center;">{$row['qw']}</td>
+
+                    <td style="text-align: center;">{$row['bili']}%</td>
+                    
+                    <td style="text-align: center;">{$row['bs']}</td>
+
+                    <td style="text-align: center;">{$row['moneys']}</td>
+
+
+                    <td style="text-align: center;"><a class='label label-success' onclick="detail('{$row['video_ids']}')">详情</a></td>
+
+
+                </tr>
+
+                {/loop}
+
+                </tbody>
+
+                <tfoot>
+
+                <tr>
+
+                    </td>
+
+                    <td colspan="8" style="text-align: right">
+
+                        {$pager}
+
+                    </td>
+
+                </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {/if}
+
+
+
+</div>
+<div id="modal-express" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:920px;margin:0px auto;">
+
+     
+
+        <div class="modal-dialog" style="width:920px;">
+
+            <div class="modal-content" >
+
+                <div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3 id="nums1"></h3><h3 id="nums2"></h3>
+
+                 <h3  style="font-size:18px;">详情</h3>
+
+                </div>
+
+                <div class="modal-body" >
+
+                      <div style="max-height:500px;overflow:auto;min-width:850px;">
+
+                         <table class="table table-hover" style="min-width:850px;">
+
+                   <tbody id="tablem"> 
+
+
+
+                    </tbody>
+
+                       </table>
+
+                       </div>
+
+                </div>
+
+                <div class="modal-footer"><a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+
+            </div>
+
+        </div>
+
+ 
+
+</div>
+    
+<script type="text/javascript">
+function detail(id)
+
+    {   var url="/web/index.php?c=site&a=entry&m=wx_shop&do=web&r=game.sn_log.jl&video_ids="+id;
+
+         $.get(url, '', function(dat){
+
+                $("#tablem").html("<tr><td>会员信息</td><td></td><td>发放时间</td><td>状态</td><td>神鸟分红</td></tr>");
+
+                 dat=JSON.parse(dat);
+
+                 // dac = dat
+                 console.log(dat)
+                 console.log(dat.length)
+                for(var i=0;i<dat.length;i++){
+
+                    var html=""
+
+
+                    html+="<tr><td>"+dat[i].uid+"</td>";
+                    
+                    html+="<td><img src='"+dat[i].avatar+"' style='width:30px;height:30px;padding1px;border:1px solid #ccc'>"+dat[i].nickname+"</td>";
+
+                    html+="<td>"+dat[i].time+"</td>";
+                    html+="<td>"+dat[i].status_s+"</td>";
+
+
+                    html+="<td>"+dat[i].moneys+"</td></tr>";
+
+                    $("#tablem").append(html); 
+
+                }
+                 // console.log(html)
+
+                $('#modal-express').modal();return;
+
+            });
+
+    }
+
+</script>
+
+{template '_footer'}
+
+<!--efwww_com-->

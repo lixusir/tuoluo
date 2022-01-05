@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+<style>
+    .fotlexa_ul{
+        width: 100%;
+        height: 2.5rem;
+        background: #fff;
+    }
+    .fotlexa_ul .fotlexa_li{
+        width: 25%;
+        height: 100%;
+    }
+    .fotlexa_ul .fotlexa_li a{
+        width: 100%;
+        height: 100%;
+        color: #999999;
+    }
+    .fotlexa_ul .fotlexa_li img{
+        width: 1.35rem;
+        height: 1.25rem;
+    }
+    ul{
+        list-style: none;
+    }
+    .akexq_you span{
+        color: #6C2127 !important;
+    }
+</style>
+<div class="fui-navbar">
+    <div class="fotlexa_bott">
+        <ul class="fotlexa_ul flex">
+            <li class="fotlexa_li" ole="a">
+                <a href="" class="flex flex-col flex-center-center external">
+                    <img src="../addons/wx_shop/template/mobile/default/static/images/img_new/footera1.png" alt="">
+                    <span>游戏</span>
+                </a>
+            </li>
+            <li class="fotlexa_li " ole="b">
+                <a href="{if empty($_GPC['merchid'])}{php echo mobileUrl()}{else}{php echo mobileUrl('merch')}{/if}&ole=b" class="flex flex-col flex-center-center external">
+                    <img src="../addons/wx_shop/template/mobile/default/static/images/img_new/footerb1.png" alt="">
+                    <span>商城</span>
+                </a>
+            </li>
+            <li class="fotlexa_li " ole="c">
+                <a href="" class="flex flex-col flex-center-center external">
+                    <img src="../addons/wx_shop/template/mobile/default/static/images/img_new/footerc1.png" alt="">
+                    <span>收益</span>
+                </a>
+            </li>
+            <li class="fotlexa_li " ole="d">
+                <a href="" class="flex flex-col flex-center-center external">
+                    <img src="../addons/wx_shop/template/mobile/default/static/images/img_new/footerd1.png" alt="">
+                    <span>任务</span>
+                </a>
+            </li>
+            <li class="fotlexa_li" ole="e">
+                <a href="{php echo mobileUrl('member')}&ole=e" class="flex flex-col flex-center-center external">
+                    <img src="../addons/wx_shop/template/mobile/default/static/images/img_new/footere1.png" alt="">
+                    <span>我的</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    $(function(){
+        var  xqaq =location.href
+        var xaaq= (xqaq.match(/(ole=)(a|b|c|d|e)*/g))[0].split('ole=')
+        var fotlexa_li = $('.fotlexa_li')
+        for(var i=0;i<fotlexa_li.length;i++){
+            if(xaaq[1]==$(fotlexa_li[i]).attr("ole")){
+                $(fotlexa_li[i]).addClass('akexq_you')
+                $(fotlexa_li[i]).find("img").attr('src',"../addons/wx_shop/template/mobile/default/static/images/img_new/footer"+xaaq[1]+"2.png")
+            }
+        }
+    })
+</script>
+

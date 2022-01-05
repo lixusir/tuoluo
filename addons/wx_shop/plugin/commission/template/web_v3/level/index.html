@@ -1,0 +1,91 @@
+{template '_header'}
+<div class="page-header">
+    当前位置：<span class="text-primary">分销商等级</span>
+</div>
+<div class="page-content">
+    <div class="page-toolbar">
+         <span class=''>
+
+		 {ifp 'commission.level.add'}
+                            <a class='btn btn-primary btn-sm' data-toggle='ajaxModal' href="{php echo webUrl('commission/level/add')}"><i class="fa fa-plus"></i> 添加新等级</a>
+		 {/if}
+
+	</span>
+    </div>
+    <div class='alert alert-primary'>
+        提示: 没有设置等级的分销商将按默认设置计算提成。商品指定的佣金金额的优先级仍是最高的，也就是说只要商品指定了佣金金额就按商品的佣金金额来计算，不受等级影响
+    </div>
+    <table class="table table-responsive table-hover">
+        <thead>
+        <tr>
+            <th style='width:160px;'>等级名称</th>
+            <th style='width:160px;'>等级权重</th>
+            {if $set['level']>=1}<th>一级佣金比例</th>{/if}
+            {if $set['level']>=2}<th>二级佣金比例</th>{/if}
+            {if $set['level']>=3}<th>三级佣金比例</th>{/if}
+            <th>升级条件</th>
+            <th style="width: 65px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {loop $list $row}
+        <tr {if $row['id']=='default'}style='background:#f2f2f2'{/if}>
+        <td>{$row['levelname']}{if $row['id']=='default'}【默认】{/if}</td>
+        <td>{$row['weight']}</td>
+        {if $set['level']>=1}<td>{php echo number_format((float)$row['commission1'],2)}%</td>{/if}
+        {if $set['level']>=2}<td>{php echo number_format((float)$row['commission2'],2)}%</td>{/if}
+        {if $set['level']>=3}<td>{php echo number_format((float)$row['commission3'],2)}%</td>{/if}
+        <td>
+            {if $row['id']!='default'}
+            {if $row['levelcondition']==1} <span style="color: #44abf7;">【满足其中一个】</span> </br>
+            {else} <span style="color: #44abf7;">【同时满足多个条件】</span> </br>{/if}
+            {if in_array('0',iunserializer($row['leveltypes_json']))}分销订单金额满 {$row['ordermoney']} 元 </br>{/if}
+            {if in_array('1',iunserializer($row['leveltypes_json']))}一级分销订单金额满 {$row['ordermoney1']} 元 </br>{/if}
+            {if in_array('2',iunserializer($row['leveltypes_json']))}分销订单数量满 {$row['ordercount']} 个 </br>{/if}
+            {if in_array('3',iunserializer($row['leveltypes_json']))}一级分销订单数量满 {$row['ordercount1']} 个 </br>{/if}
+            {if in_array('4',iunserializer($row['leveltypes_json']))}自购订单金额满 {$row['ordermoney2']} 元 </br>{/if}
+            {if in_array('5',iunserializer($row['leveltypes_json']))}自购订单数量满 {$row['ordercount2']} 个 </br>{/if}
+
+            {if in_array('6',iunserializer($row['leveltypes_json']))}下级总人数满 {$row['downcount']} 个（分销商+非分销商） </br>{/if}
+            {if in_array('7',iunserializer($row['leveltypes_json']))}一级下级人数满 {$row['downcount1']} 个（分销商+非分销商） </br>{/if}
+
+            {if in_array('8',iunserializer($row['leveltypes_json']))}团队总人数满 {$row['teamcount']} 个（分销商） </br>{/if}
+            {if in_array('9',iunserializer($row['leveltypes_json']))}一级团队人数满 {$row['teamcount1']} 个（分销商） </br>{/if}
+
+            {if in_array('10',iunserializer($row['leveltypes_json']))}已提现佣金总金额满 {$row['commissionmoney']} 元</br>{/if}
+            {else}
+            默认等级
+            {/if}
+        </td>
+        <td>
+            {ifp 'commission.level.edit'}
+            <a class='btn btn-default btn-sm btn-op btn-operation' data-toggle='ajaxModal'  href="{php echo webUrl('commission/level/edit', array('id' => $row['id']))}">
+                                <span data-toggle="tooltip" data-placement="top" title="" data-original-title="{ifp 'commission.level.edit'}编辑{else}查看{/if}">
+                                    {ifp 'commission.level.edit'}
+                                    <i class='icow icow-bianji2'></i>
+                                    {else}
+                                    <i class='icow icow-chakan-copy'></i>
+                                    {/if}
+                               </span>
+            </a>
+            {/if}
+            {if $row['id']!='default'}
+            {ifp 'commission.level.delete'}
+            <a class='btn btn-default btn-sm btn-op btn-operation' data-toggle='ajaxRemove'  href="{php echo webUrl('commission/level/delete', array('id' => $row['id']))}" data-confirm="确认删除此等级吗？">
+                                    <span data-toggle="tooltip" data-placement="top" title="" data-original-title="删除">
+                                    <i class='icow icow-shanchu1'></i>
+                               </span>
+            </a>
+        </td>
+        {/if}
+        {/if}
+
+        </tr>
+        {/loop}
+
+        </tbody>
+    </table>
+</div>
+{template '_footer'}
+
+

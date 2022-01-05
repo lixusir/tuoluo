@@ -1,0 +1,228 @@
+{template '_header'}
+<link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+<link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/account/default3/style.css?v=2.0.0">
+
+<style type="text/css">
+
+    .header {background-image: url("{php echo empty($set['wap']['bg'])?'../addons/wx_shop/template/account/default3/bg.jpg':tomedia($set['wap']['bg'])}"); background-repeat: n}
+
+    .btn {background: {if !empty($set['wap']['color'])}{$set['wap']['color']}{else}#43afcf{/if};}
+
+    .text a {color: {if !empty($set['wap']['color'])}{$set['wap']['color']}{else}#43afcf{/if};}
+    .text a{
+        color: #000 !important;
+    }
+    #btnSubmit{
+        background-image: linear-gradient(to bottom,#404040,#131313) !important;
+    }
+    .fui-cell-group{
+        background: none;
+        padding-top: 10%;
+    }
+    .fui-cell-group .fui-cell{
+        width: 90%;
+        margin: 0 auto;
+        border-radius: .3rem;
+        background: #ddd;
+        margin-bottom: 1rem;
+    }
+    .fui-cell-group .fui-cell .fui-input{
+        height: 1rem;
+    }
+    .img_box{
+        width: 100%;
+        height: 30%;
+        /* background: red ; */
+        padding-top: 3rem;
+        
+    }
+    .img_box img{
+        display: block;
+        width: 5rem;
+        height: 5rem;
+        background: #fff;
+        margin:0 auto ;
+        border: 1px solid #ddd;
+    }
+    .fui-cell-group .fui-cell .yzma_inpy{
+        width: 60% !important;
+        height: 100%;
+        background: #ddd;
+        /* background: #fff; */
+        padding: 0 .6rem;
+        font-size: .6rem;
+        
+    }
+    .yzma_inpy::-webkit-input-placeholder { /* Internet Explorer 10+ */
+        color: #757575 !important;
+        font-size: 16px;
+    }   
+    .yzma_inpy input{
+        width: 100%;
+        height: 100% !important;
+        background: #ddd;
+    }
+    .fui-cell-group>.fui-cell:nth-child(3){
+        padding: 0 ;
+        height: 2.4rem;
+        background: none;
+    }
+    #btnCode{
+        width: 30%;
+        height: 80%;
+        background-image: linear-gradient(to bottom,#404040,#131313) !important;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: .6rem;
+        text-align: center;
+        border-radius: .3rem;
+    }
+    .fui-page{
+        background: url(../addons/wx_shop/template/mobile/default/static/images/youkeimg.png) no-repeat;
+        background-size: 100% 100%;
+    }
+</style>
+
+<div class="fui-page">
+
+    {if is_h5app()}
+
+    <div class="fui-header">
+
+        <div class="fui-header-left">
+
+            <a class="back"> </a>
+
+        </div>
+
+        <div class="title">{if empty($type)}用户注册{else}找回密码{/if}</div>
+
+        <div class="fui-header-right" data-nomenu="true"></div>
+
+    </div>
+
+    {/if}
+
+    <!-- <div class="fui-content" >
+
+        <div class="header" style="background: ;">
+
+            <div class="logo">
+
+                <img src="{php echo tomedia($set['shop']['logo'])}" />
+
+            </div>
+
+            <div class="name">{$set['shop']['name']}</div>
+
+        </div> -->
+
+
+
+            <div class="fui-cell-group">
+
+                <div class="fui-cell">
+
+                    
+
+                    <div class="fui-cell-info">
+
+                        <input type="tel" placeholder="请输入手机号" class="fui-input" maxlength="11" name="mobile" id="mobile" value="{php echo trim($_GPC['mobile'])}" />
+
+                    </div>
+
+                </div>
+
+                {if !empty($set['wap']['smsimgcode'])}
+
+                    <div class="fui-cell">
+
+                        
+
+                        <div class="fui-cell-info">
+
+                            <input type="tel" placeholder="请输入图形验证码" class="fui-input" maxlength="4" name="verifycode2" id="verifycode2">
+
+                        </div>
+
+                        <img class="fui-cell-remark noremark" src="../web/index.php?c=utility&a=code&r={php echo time()}" style="width: 5rem" id="btnCode2">
+
+                    </div>
+
+                {/if}
+
+                <div class="fui-cell flex flex-jcsb flex-center-align">
+
+                    
+
+                    <div class="yzma_inpy">
+
+                        <input type="tel" placeholder="请输入5位短信验证码" class="fui-input" maxlength="5" name="verifycode" id="verifycode">
+
+                    </div>
+
+                    <button class="fui-cell-remark noremark" href="javascript:;" id="btnCode">获取验证码</button>
+
+                </div>
+
+                <div class="fui-cell">
+
+                    
+
+                    <div class="fui-cell-info">
+
+                        <input type="password" placeholder="请输入密码" class="fui-input" name="pwd" id="pwd" />
+
+                    </div>
+
+                </div>
+
+                <div class="fui-cell">
+
+                    
+
+                    <div class="fui-cell-info">
+
+                        <input type="password" placeholder="请重复输入密码" class="fui-input" name="pwd1" id="pwd1">
+
+                    </div>
+
+                </div>
+
+                <div class="fui-cell" style="position: relative;">
+                    <div class="fui-cell-info">
+                        <input type="tel" placeholder="邀请人" class="fui-input" maxlength="11" name="mid" id="mid" value="{php echo trim($_GPC['mid'])}" />
+                    </div>
+                    <span style="position: absolute;left: 0.5rem; bottom: -0.8rem; font-size: 0.7rem;">注：请认准上级邀请码，唯一锁粉标准</span>
+                </div>
+
+            </div>
+
+
+
+        <div class="btn" id="btnSubmit">{if empty($type)}立即注册{else}立即找回{/if}</div>
+
+        <div class="text">
+
+            <p>已有帐号? <a href="{$set['wap']['loginurl']}">立即登录</a></p>
+
+        </div>
+
+
+
+        <script language='javascript'>
+
+            require(['biz/member/account'], function (modal) {
+
+                modal.initRf({backurl:'{$backurl}', type: {php echo intval($type)}, endtime: {php echo intval($endtime)}, imgcode: {php echo intval($set['wap']['smsimgcode'])}});
+
+            });
+
+        </script>
+
+    </div>
+
+</div>
+
+{template '_footer'}

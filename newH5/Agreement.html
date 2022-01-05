@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+        <script> document.documentElement.style.fontSize =document.documentElement.clientWidth/750*40 +"px";</script>
+        <meta name="format-detection" content="telephone=no" />
+        <title>用户协议</title>
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/static/js/dist/foxui/css/foxui.min.css?v=0.2">
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/mobile/default/static/css/style.css?v=3.0.0">
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/mobile/default/static/css/h5app.css?v=2.0.3">
+        <script src="../newH5/js/jquery-1.7.2.min.js"></script>
+        <script src="../newH5/js/myui.js"></script>
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_1573421_rrwr2a4jx8f.css">
+        <link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+        <script src="../addons/wx_shop/static/js/require.js"></script>
+        <script src="../addons/wx_shop/static/js/myconfig-app.js"></script>
+        
+</head>
+<style>
+    .fui-header ~ .fui-content{
+        margin: 0;
+    }
+    .fui-header{
+        border-bottom: 1px solid #ededed;
+    }
+	.body_box{
+        padding: 0 10px;
+    }
+</style>
+<body>
+    <div class='fui-page  fui-page-current'>
+        <!-- <div class="fui-header">
+            <div class="fui-header-left">
+                <a class="back"></a>
+            </div>
+            <div class="title">用户协议</div>
+            <div class="fui-header-right"></div>
+        </div> -->
+        <div class="body_box fui-content">
+
+        </div>
+        
+    </div>
+    
+</body>
+
+
+<script  language='javascript'>
+	$(function(){
+        $('.back').click(function(){
+            window.android && android.goBack();
+            history.back(-1)
+        })
+        ajax_fun()
+        function ajax_fun(){
+            var urltz = "../app/index.php?i=96&c=entry&m=wx_shop&do=mobile&r=game.answer.xieyiarticle"
+            $.ajax({
+                method: "POST",
+                url: urltz,
+                dataType: "json",
+                data: {
+                    token:myui.cookie.getCookie('token'),
+                    // token:"b76cfd6f076043746f59be1316ebafc4",
+                    article_category:"26"
+                },
+                success: function (data) {
+                   console.log(data.result.content[0])
+                   var dale =  data.result.content[0];
+                    $('.body_box').html(dale.article_content)
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        }
+    })
+</script>
+
+
+</html>
+
+
+

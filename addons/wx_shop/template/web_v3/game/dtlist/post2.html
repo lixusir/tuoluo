@@ -1,0 +1,152 @@
+{template '_header'}
+
+<div class="page-header">
+    当前位置：<span class="text-primary">{if !empty($goods['id'])}编辑{else}添加{/if}大转盘商品{if !empty($goods['id'])}({$goods['goodsname']}){/if}</span>
+</div>
+
+<div class="page-content">
+    <div class="page-sub-toolbar">
+        <span class=''>
+            {ifp 'game.dzplist.add'}
+                <a class="btn btn-primary btn-sm" href="{php echo webUrl('game/list/add')}">添加大转盘商品</a>
+            {/if}
+        </span>
+    </div>
+    <form {ife 'game.dzplist.add' $goods}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$goods['id']}" />
+
+            <!--大转盘商品信息-->
+            <div class="region-goods-details row">
+
+                <div class="region-goods-right col-sm-10">
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label must">大转盘商品名称</label>
+                {ife 'game.dzplist.add' $goods}
+                <div class="col-sm-7"  style="padding-right:0;" >
+                    <input type="text" name="goodsname" id="goodsname" class="form-control" value="{$goods['goodsname']}" data-rule-required="true" />
+                </div>
+                {else}
+                <div class='form-control-static'>{$goods['goodsname']}</div>
+                {/if}
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label must">goodsType</label>
+                {ife 'game.dzplist.add' $goods}
+                <div class="col-sm-7"  style="padding-right:0;" >
+                    <input type="text" name="goodsType" id="goodsType" class="form-control" value="{$goods['goodsType']}" data-rule-required="true" />
+                </div>
+                {else}
+                <div class='form-control-static'>{$goods['goodsType']}</div>
+                {/if}
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">图片</label>
+                <div class="col-sm-9 col-xs-12 detail-logo">
+                    {ife 'game.dzplist.add' $goods}
+                    {php echo tpl_form_field_image2('img', $goods['img'])}
+                    <span class="help-block">建议尺寸: 100 * 100 ，或正方型图片 </span>
+                    {else}
+                    {if !empty($goods['img'])}
+                    <a href='{php echo tomedia($goods['img'])}' target='_blank'>
+                    <img src="{php echo tomedia($goods['img'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+                    </a>
+                    {/if}
+                    {/if}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label">奖励类型设置</label>
+
+                <div class="col-sm-9 col-xs-12">
+
+                    {ife 'goods' $goods}
+
+                    <label class="radio-inline"><input type="radio" name="status" value="0"  {if empty($goods['status'])}checked="true"{/if}/> 金币</label>
+
+                    <label class="radio-inline"><input type="radio" name="status" value="1"  {if $goods['status'] == 1}checked="true"{/if}   /> 彩蛋币</label>
+
+                    <label class="radio-inline"><input type="radio" name="status" value="2"  {if $goods['status'] == 2}checked="true"{/if}   /> 现金</label>
+                    <label class="radio-inline"><input type="radio" name="status" value="3"  {if $goods['status'] == 3}checked="true"{/if}   /> 转盘券</label>
+
+                    <span class="help-block">设置奖品奖励类型</span>
+
+                    {else}
+
+                    <div class='form-control-static'>
+                    {if $goods['status'] == 0}金币
+                    {elseif $goods['status'] == 1}彩蛋币
+                    {elseif $goods['status'] == 2}现金
+                    {elseif $goods['status'] == 3}转盘券
+
+                    {/if}</div>
+
+                    {/if}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group price">
+            <label class="col-sm-2 control-label">奖励数量</label>
+            <div class="col-sm-9 col-xs-12">
+                {ife 'game.dzplist.add' $goods}
+                <div class="input-group">
+                    <input type="text" name="money" id="money" class="form-control" value="{$goods['money']}" />
+                    <span class="input-group-addon">个</span>
+                </div>
+                <span class='help-block'>奖励设置!</span>
+
+                {else}
+                <div class='form-control-static'>大转盘合成概率：{$goods['money']} 个</div>
+                {/if}
+            </div>
+            </div>
+
+
+            <div class="form-group price">
+            <label class="col-sm-2 control-label">大转盘概率</label>
+            <div class="col-sm-9 col-xs-12">
+                {ife 'game.dzplist.add' $goods}
+                <div class="input-group">
+                    <input type="text" name="gl" id="gl" class="form-control" value="{$goods['gl']}" />
+                    <span class="input-group-addon">%</span>
+                </div>
+                <span class='help-block'>概率设置!</span>
+
+                {else}
+                <div class='form-control-static'>大转盘合成概率：{$goods['gl']} %</div>
+                {/if}
+            </div>
+            </div>
+
+
+            </div>
+        </div>
+        
+        <div class="form-group"></div>
+        <div class="form-group">
+            <label class="col-lg control-label"></label>
+            <div class="col-sm-9 col-xs-12">
+                {ife 'game.dzplist' $goods}
+                    <input type="submit" value="提交" class="btn btn-primary"  />
+                {/if}
+                <input type="button" name="back" onclick='history.back()' {ifp 'game.dzplist.add|game.dzplist.edit'}style='margin-left:10px;'{/if} value="返回列表" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+
+</div>
+{template '_footer'}
+

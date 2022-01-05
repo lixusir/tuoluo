@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+        <script> document.documentElement.style.fontSize =document.documentElement.clientWidth/750*40 +"px";</script>
+        <meta name="format-detection" content="telephone=no" />
+        <title>系统消息</title>
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/static/js/dist/foxui/css/foxui.min.css?v=0.2">
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/mobile/default/static/css/style.css?v=3.0.0">
+        <link rel="stylesheet" type="text/css" href="../addons/wx_shop/template/mobile/default/static/css/h5app.css?v=2.0.3">
+        <script src="../newH5/js/jquery-1.7.2.min.js"></script>
+        <script src="../newH5/js/myui.js"></script>
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_1573421_rrwr2a4jx8f.css">
+        <link rel="stylesheet" href="../addons/wx_shop/template/mobile/default/static/css/flex.css">
+</head>
+
+
+<style>
+    .fui-header{
+        border-bottom:1px solid #ddd ;
+    }
+	.list_ul{
+		width: 100%;
+		/* margin-top: 2.2rem; */
+		padding: .75rem;
+		background: #fff;
+	}
+	.list_ul .list_li{
+		width: 100%;
+		color: #999999;
+		margin-top: .5rem;
+		padding-bottom: .5rem;
+		/* border-bottom: 1px solid #999; */
+	}
+	.list_ul .list_li img{
+		width: 100%;
+		height: 8rem;
+		display: block;
+		/* background: red; */
+		border-radius: .3rem;
+		border: 1px solid #999;
+	}
+</style>
+<body>
+    <div class='fui-page  fui-page-current'>
+        <!-- <div class="fui-header">
+            <div class="fui-header-left">
+                <a class="back" ></a>
+            </div>
+            <div class="title">活动</div>
+            <div class="fui-header-right"></div>
+        </div> -->
+        <div class="list_ul">
+            <!-- <div class="list_li">
+                <img src="http://dmimg.5054399.com/allimg/pkm/pk/22.jpg" alt="">
+            </div>
+             -->
+        </div>
+    </div>
+</body>
+
+
+<script  language='javascript'>
+    $(function(){
+      
+        $('.back').click(function(){
+            window.android && android.goBack();
+            history.back(-1)
+        })
+        ajax_fun()
+        function ajax_fun(){
+            console.log('?')
+            var urltz = "../app/index.php?i=96&c=entry&m=wx_shop&do=mobile&r=game.game.articlelist"
+            $.ajax({
+                method: "POST",
+                url: urltz,
+                dataType: "json",
+                data: {
+                    token:myui.cookie.getCookie('token'),
+                    article_category:"23"
+                },
+                success: function (data) {
+                    var html = "";
+					var data = data.result.list;
+                    for(var i=0;i<data.length;i++){
+                        html+= `<div class="list_li">
+                                    ${data[i].article_content}
+                                </div>`
+                    }
+                    $('.list_ul').html(html)
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        }
+    })
+</script>
+</html>
+
+
+

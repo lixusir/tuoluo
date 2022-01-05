@@ -1,0 +1,34 @@
+{template '_header'}
+	<div>dasfasdfsadfdasdfds</div>
+
+
+
+
+<script language='javascript'>
+var json = {1:'2',2:'3',4:'1'}; //创建对象；
+var jsonStr = JSON.stringify(json);       //转为JSON字符串
+console.log("json:"+typeof(json));
+console.log("jsonStr"+typeof(json));
+	 var url = "<?php echo mobileUrl('game/answer/keepanswer',array('uid'=>3995)); ?>";
+    $.ajax({
+        url:url,
+		type:'post',
+		data:{answer:jsonStr,type:0},
+		dataType:'json',
+		success:function(res){
+			if(res.status==1){
+				// alert('修改成功')
+				console.log('success')
+			}else{
+				console.log(res)
+			}
+			
+		},
+		error:function(e){
+			console.log(e)
+		}
+	})
+
+
+</script>
+{template '_footer'}

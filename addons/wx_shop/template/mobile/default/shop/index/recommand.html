@@ -1,0 +1,185 @@
+<style>
+	.goods_ul{
+		width: 100%;
+		
+		/* background: rgba(245,245,245,1); */
+		padding: .75rem;
+		position: relative;
+	}
+	.fui-goods-group{
+		background: none;
+	}
+	.fui-goods-group.block .fui-goods-item{
+		padding: 0;
+		float: inherit;
+		/* background-color: ; */
+	}
+	.goods_ul .goods_li{
+		width: 100% !important;
+		background-color: #fff !important;
+		border-radius: .2rem !important;
+		margin-bottom: .75rem;
+		padding: 0;
+		box-shadow: 0 0 0 0 rgba(75,75,75,0.3);
+	}
+	.goods_ul .goods_div{
+		padding: .75rem .75rem .75rem .5rem;
+	}
+	.goods_ul .goods_img{
+		width: 100% !important;
+		height: 5rem !important;
+		border-radius: .2rem .2rem 0 0;
+		background-size: 100% 100% !important;
+		padding: 0 !important;
+	}
+	.goods_tili{
+		font-size:0.65rem;
+		font-weight:bold;
+		color:rgba(51,51,51,1);
+		margin-bottom: .8rem;
+	}
+	.goods_mony{
+		font-size: .55rem;
+		color: #CD0315;
+	}
+	.goods_mony .mony{
+		font-size: 1.25rem;
+		color: #CD0315;
+		font-weight: bold;
+	}
+	.color_999{
+		color: #999;
+		text-decoration: line-through;
+	}
+	.goods_ul .goods_btn{
+		width:3.5rem;
+		height:1.5rem;
+		background:rgba(205,3,21,1);
+		border-radius:1rem;
+		outline: none;
+		border: none;
+		color: #fff;
+	}
+</style>
+<!-- <div class="goods_ul">
+	<div class="goods_li">
+		<div class="goods_img" src="http://6339.chac.xyz/attachment/images/96/2019/11/JcHOVXtllSDvLsVLCmoDoTHt2Vs0Tx.jpg" alt=""></div>
+		<div class="goods_div">
+			<p class="goods_tili">某某某商品一袋装</p>
+			<div class="flex flex-jcsb flex-center-align">
+				<div class="goods_mony">
+					￥<span class="mony">29.00</span><span class="color_999">￥99.00</span>
+				</div>
+				<button class="goods_btn">去抢购</button>
+			</div>
+		</div>
+	</div>
+</div> -->
+<div id="recommand"></div>
+
+<div class='infinite-loading' style="text-align: center; color: #666;">
+
+	<span class='fui-preloader'></span>
+
+	<span class='text'> 正在加载...</span>
+	
+</div>
+
+<script type="text/html" id="tpl_recommand">
+
+	<%if list!=''%>
+
+		<%if page==1%>
+
+			<!-- <div class="fui-line" style="background: #f4f4f4;">
+
+				<div class="text text-danger"><i class="icon icon-hotfill"></i> 店铺推荐</div>
+
+			</div> -->
+
+			<div class="fui-goods-group block border">
+
+		<%/if%>
+
+		
+		<div class="goods_ul">
+			<%each list as item%>
+			<div class="fui-goods-item goods_li " data-goodsid="<%item.id%>" data-type="<%item.type%>">
+				<a <%if item.bargain>0%>href="{php echo mobileUrl('bargain/detail')}&id=<%item.bargain%>"<%else%>href="{php echo mobileUrl('goods/detail')}&id=<%item.id%>"<%/if%>>
+					<!-- <img class="goods_img image"  src="" alt=""> -->
+					<div class="goods_img image" data-lazy-background="<%item.thumb%>"></div>
+				</a>
+					<div class="goods_div">
+						<p class="goods_tili"><%item.title%></p>
+						<div class="flex flex-jcsb flex-center-align">
+							<div class="goods_mony">
+								￥<span class="mony"><%item.minprice%></span><span class="color_999">￥99.00</span>
+							</div>
+							<button class="goods_btn buy" data-type="<%item.type%>">去抢购</button>
+							
+						</div>
+					</div>
+				
+			</div>
+				<!-- <div class="fui-goods-item" data-goodsid="<%item.id%>" data-type="<%item.type%>">
+
+					<a <%if item.bargain>0%>href="{php echo mobileUrl('bargain/detail')}&id=<%item.bargain%>"<%else%>href="{php echo mobileUrl('goods/detail')}&id=<%item.id%>"<%/if%>>
+
+						<div class="image" data-lazy-background="<%item.thumb%>">
+
+							<%if item.total<=0%><div class="salez" style="background-image: url('{php echo tomedia($_W['shopset']['shop']['saleout'])}'); " ></div><%/if%>
+
+						</div>
+
+					</a>
+
+					<div class="detail">
+
+						<a <%if item.bargain>0%>href="{php echo mobileUrl('bargain/detail')}&id=<%item.bargain%>"<%else%>href="{php echo mobileUrl('goods/detail')}&id=<%item.id%>"<%/if%>>
+
+							<div class="name">
+
+								<%if item.ispresell==1%><i class="fui-tag fui-tag-danger">预售</i><%/if%>
+
+								<%item.title%>
+
+							</div>
+
+						</a>
+
+						<div class="price" style="margin-top: 0.3rem">
+
+							<span class="text">￥<%item.minprice%></span>
+
+							<span class="buy" data-type="<%item.type%>" ><%if item.bargain>0%>砍价活动<%else%>购买<%/if%></span>
+
+						</div>
+
+					</div>
+
+				</div> -->
+
+
+
+			<%/each%>
+
+		</div>	
+
+		<%if page==1%>
+
+			</div>
+
+		<%/if%>
+
+		
+
+	<%/if%>
+
+</script>
+
+<script language='javascript'>
+
+	require(['biz/shop/index'], function (modal) {modal.init({merchid:{php echo intval($_GPC['merchid'])}})});
+
+</script>
+

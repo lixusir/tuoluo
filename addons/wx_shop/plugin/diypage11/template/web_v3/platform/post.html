@@ -1,0 +1,61 @@
+<form action=""
+	  {ife 'diypage.platform' $platform}action="" method="post"{/if}  class="form-horizontal form-validate" enctype="multipart/form-data">
+<input type="hidden" name="id" value="{$platform['id']}"/>
+<input type="hidden" name="r" value="diypage.platform.{if empty($level['id'])}add{else}edit{/if}"/>
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button data-dismiss="modal" class="close" type="button">×</button>
+			<h4 class="modal-title">{if !empty($platform['id'])}编辑{else}添加{/if}门店台位</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label class="col-sm-2 control-label must">台位名称</label>
+				<div class="col-sm-9 col-xs-12">
+					{ife 'diypage.platform' $platform}
+					<input type="text" name="name" class="form-control" value="{$platform['name']}"
+						   data-rule-required='true'/>
+					{else}
+					<div class='form-control-static'>{$platform['name']}</div>
+					{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label must">可就餐人数</label>
+				<div class="col-sm-9 col-xs-12">
+					{ife 'diypage.platform' $platform}
+					<div class='input-group'>
+						<input type="number" name="num" class="form-control" value="{$platform['num']}"  min="1" max="100000"/>
+						<div class='input-group-addon'>填写正整数</div>
+					</div>
+					{else}
+					<div class='form-control-static'>{$platform['num']}</div>
+					{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label must">台位状态</label>
+				<div class="col-sm-9 col-xs-12">
+					{ife 'diypage.platform' $platform}
+					<label class="radio-inline"><input type="radio"  name="status" value="1" {if $platform['status'] ==1} checked="checked"{/if} /> 空闲</label>
+					<label class="radio-inline"><input type="radio"  name="status" value="2" {if $platform['status'] ==2 } checked="checked"{/if} /> 开台</label>
+					<label class="radio-inline"><input type="radio"  name="status" value="3" {if $platform['status'] ==3 } checked="checked"{/if} /> 已下单</label>
+					<label class="radio-inline"><input type="radio"  name="status" value="4" {if $platform['status'] ==4 } checked="checked"{/if} /> 已支付</label>
+					{else}
+					{if $status ==0}不开启{else}开启{/if}
+					{/if}
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="submit">提交</button>
+		<button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+	</div>
+</div>
+</form>
+

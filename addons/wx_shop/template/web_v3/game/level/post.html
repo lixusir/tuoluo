@@ -1,0 +1,169 @@
+{template '_header'}
+
+<div class="page-header">
+    当前位置：<span class="text-primary">{if !empty($level['id'])}编辑{else}添加{/if}广告等级{if !empty($level['id'])}({$level['levelname']}){/if}</span>
+</div>
+
+<div class="page-content">
+    <div class="page-sub-toolbar">
+        <span class=''>
+            {ifp 'game.level.add'}
+                <a class="btn btn-primary btn-sm" href="{php echo webUrl('game/level/add')}">添加广告等级</a>
+            {/if}
+        </span>
+    </div>
+    <form {ife 'game.level.add' $level}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$level['id']}" />
+
+        <div class="region-goods-details row">
+
+            <div class="region-goods-right col-sm-10">
+
+                <div class="form-group">
+
+
+                    <label class="col-sm-2 control-label must"><span style='color:red'>*</span>等级权重</label>
+
+                    <div class="col-sm-9 col-xs-12">
+
+                        {ife 'member.level' $level}
+
+                        <input type="text" name="level" class="form-control" value="{$level['level']}" />
+
+                        <span class='help-block'>等级权重，数字越大越高级</span>
+
+                        {else}
+
+                        <div class='form-control-static'>{$level['level']}</div>
+
+                        {/if}
+
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+
+
+                        <label class="col-sm-2 control-label must"><span style='color:red'>*</span> 等级名称</label>
+
+                        <div class="col-sm-9 col-xs-12">
+
+                           {ife 'member.level' $level}
+
+                            <input type="text" name="levelname" class="form-control" value="{$level['levelname']}" />
+
+                               {else}
+
+                            <div class='form-control-static'>{$level['levelname']}</div>
+
+                            {/if}
+
+                        </div>
+
+
+                </div>
+
+                <div class="form-group">
+
+
+                        <label class="col-sm-2 control-label must">升级条件</label>
+
+                        <div class="col-sm-9 col-xs-12">
+
+
+                        <div class='input-group'>
+
+
+                           <span class='input-group-addon'>累计钱数</span>
+
+                           <input type="text" name="jy" class="form-control" value="{$level['jy']}" />
+
+                           <span class='input-group-addon'>元</span>
+
+
+
+                         </div>
+
+                            <span class='help-block' style="color: red;">升级累计钱数</a> </span>
+
+
+                      </div>
+
+
+
+                </div>
+
+
+                <div class="form-group">
+
+
+                        <label class="col-sm-2 control-label must">奖励</label>
+
+                        <div class="col-sm-9 col-xs-12">
+
+
+                        <div class='input-group'>
+
+
+
+                           <input type="text" name="jl" class="form-control" value="{$level['jl']}" />
+                           <span class='input-group-addon'>元</span>
+
+
+
+                         </div>
+
+
+                      </div>
+
+
+
+                </div>
+
+                <div class="form-group">
+
+
+                        <label class="col-sm-2 control-label must">比例</label>
+
+                        <div class="col-sm-9 col-xs-12">
+
+
+                        <div class='input-group'>
+
+
+
+                           <input type="text" name="bili" class="form-control" value="{$level['bili']}" />
+
+
+
+                         </div>
+
+
+                      </div>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+        
+        <div class="form-group"></div>
+        <div class="form-group">
+            <label class="col-lg control-label"></label>
+            <div class="col-sm-9 col-xs-12">
+                {ife 'game.level' $level}
+                    <input type="submit" value="提交" class="btn btn-primary"  />
+                {/if}
+                <input type="button" name="back" onclick='history.back()' {ifp 'game.level.add|game.level.edit'}style='margin-left:10px;'{/if} value="返回列表" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+
+</div>
+{template '_footer'}
+
