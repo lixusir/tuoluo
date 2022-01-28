@@ -1136,8 +1136,8 @@ class Member_WxShopPage extends MobilePage
 		global $_W,$_GPC;
 
     	$mobile = !empty($_GPC['mobile']) ? trim($_GPC['mobile']) : show_json_w(-1,null, '手机号不能为空！');
-            show_json_w(1,null,'成功！');
-            // m('game')->sendcode($mobile,$_GPC['isres']);
+//            show_json_w(1,null,'成功！');
+             m('game')->sendcode($mobile,$_GPC['isres']);
         }
 
     public function mobilelogin(){
@@ -1155,7 +1155,7 @@ class Member_WxShopPage extends MobilePage
 
         if($redis->get($mobile.'codetime') <= time() || $code != $redis->get($mobile."code")){
 
-//            show_json_w(-1,null, '验证码错误或已过期！');
+            show_json_w(-1,null, '验证码错误或已过期！');
         }
 
         $agentid = 0;
