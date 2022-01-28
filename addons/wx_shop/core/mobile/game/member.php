@@ -1134,24 +1134,96 @@ class Member_WxShopPage extends MobilePage
 	public function sendcode(){
 		//发送短信
 		global $_W,$_GPC;
-		
+
     	$mobile = !empty($_GPC['mobile']) ? trim($_GPC['mobile']) : show_json_w(-1,null, '手机号不能为空！');
-    	show_json_w(1,null,'成功！');
-		// m('game')->sendcode($mobile,$_GPC['isres']);
-	}
+            show_json_w(1,null,'成功！');
+            // m('game')->sendcode($mobile,$_GPC['isres']);
+        }
+
+    public function mobilelogin(){
+
+	    global $_W;
+	    global $_GPC;
+
+        $mobile = !empty($_GPC['mobile']) ? trim($_GPC['mobile']) : show_json_w(-1,null, '手机号不能为空！');
+
+        $code = !empty($_GPC['code']) ? $_GPC['code'] : show_json_w(-1,null, '验证码不能为空！');
+        // m('game')->checkmobile($mobile,$code);//检验验证码
+        $set = pdo_fetch('select * from ' . tablename('wx_shop_game_set') . ' where uniacid=:uniacid ',array(':uniacid'=>$_W['uniacid']));
+
+        $redis=m("game")->getRedis();
+
+        if($redis->get($mobile.'codetime') <= time() || $code != $redis->get($mobile."code")){
+
+//            show_json_w(-1,null, '验证码错误或已过期！');
+        }
+
+        $agentid = 0;
+
+        $info = pdo_fetch('select id,nickname,avatar,openid from ' . tablename('wx_shop_member') . ' where mobile=:mobile', array(':mobile'=>$mobile));
+        //手机号码存在 更换openid
+        if($info){
+            $data['token'] = md5(serialize($info['openid']).time());
+            $data['logintime']=time();
+            $data['is_jh']=1;
+            pdo_update("wx_shop_member",$data,array("id"=>$info['id']));
+            $returnjson['token']=$data['token'];
+            $returnjson['nickname']=$info['nickname'];
+            $returnjson['avatar']=$_W['siteroot'].$info['avatar'];
+            $returnjson['uid']=$info['id'];
+            show_json_w(1,$returnjson,'成功');
+        }else{
+            $UserData['mobile']=$mobile;
+            $UserData['pwd']=md5(123456);
+            $UserData['nickname']= substr($mobile,0,3).'****'.substr($mobile,7,11);
+            $UserData['openid']= md5($mobile);
+            $UserData['avatar']= $_W['siteroot'].'../addons/wx_shop/static/images/noface.png';
+            $UserData['createtime']=time();
+
+            //登录时间
+            $UserData['logintime']=time();
+            $UserData['uniacid']=$_W['uniacid'];
+            $UserData['is_wx']=0;
+
+            $UserData['is_jh']=1;
+            $UserData['agentid'] = $agentid;
+            $UserData['token'] = md5(serialize($UserData['openid']).time());
+            while (1) {
+                $yqm = m('member')->getYqm(6);
+                $count = pdo_fetchcolumn('select count(*) from ' . tablename('wx_shop_member') . ' where uniacid=:uniacid and yqm=:yqm',array(':uniacid'=>$_W['uniacid'],'yqm'=>$yqm));
+                if($count <= 0) {
+                    break;
+                }
+            }
+            $UserData['yqm'] = $yqm;
+            pdo_insert('wx_shop_member',$UserData);
+            $UserData['id'] = pdo_insertid();
+
+            $returnjson['token']=$UserData['token'];
+            $returnjson['nickname']=$UserData['nickname'];
+            $returnjson['avatar']=$UserData['avatar'];
+            $returnjson['uid']=$UserData['id'];
+            file_put_contents(dirname(__FILE__).'/returnjson',json_encode( $returnjson));
+            show_json_w(1,$returnjson,'成功');
+        }
+
+    }
 }
-function alltable($condition){
-	for ($i=0; $i < 10; $i++) { 
-		if($i == 9) {
-			$sql .= 'select * from ' . tablename('wx_shop_game_redlog'.$i) . ' where '.$condition;
-		} else {
-			$sql .= 'select * from ' . tablename('wx_shop_game_redlog'.$i) . ' where '.$condition.' union all ';
-		}
-	}
-	return $sql;
+    function alltable($condition){
+	    for ($i=0; $i < 10; $i++) {
+            if($i == 9) {
+                $sql .= 'select * from ' . tablename('wx_shop_game_redlog'.$i) . ' where '.$condition;
+            } else {
+                $sql .= 'select * from ' . tablename('wx_shop_game_redlog'.$i) . ' where '.$condition.' union all ';
+            }
+	    }
+	    return $sql;
 	// echo '<pre>';
 	//     print_r($sql);
 	// echo '</pre>';
 	// exit;
-}
+
+    }
+
+
 ?>
