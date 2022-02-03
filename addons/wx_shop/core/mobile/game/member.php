@@ -53,8 +53,8 @@ class Member_WxShopPage extends MobilePage
 		if(empty($tx_money)) {
 			$tx_money = 0;
 		}
-		//credit_red 账户红包余额
-		//升级红包
+		//credit_red 账户积分余额
+		//升级积分
 		$red = pdo_fetch('select level,red_max from ' . tablename('wx_shop_game_goods') . ' where uniacid=:uniacid and level>:level and red_max!=0',array(':uniacid'=>$_W['uniacid'],':level'=>$member['game_level']));
 		
 		$red['cha'] = $red['level']-$member['game_level'];
@@ -81,10 +81,10 @@ class Member_WxShopPage extends MobilePage
 		$member['lj'] = $set['xz_lj'].'&yqm='.$member['yqm'];
 		
 		$member['img_sq'] = tomedia($set['img_sq']);
-		//获取领取红包数据
+		//获取领取积分数据
 		$lb_red = pdo_fetchall('select m.nickname,l.money from ' . tablename('wx_shop_game_member_log') . ' l left join '.tablename('wx_shop_member').' m on m.id=l.uid where l.uniacid=:uniacid and l.type=11 and l.status=3 order by l.createtime desc limit 50',array(':uniacid'=>$_W['uniacid']));
 		foreach ($lb_red as &$val) {
-			$val['content'] = '恭喜'.$val['nickname'].'领取'.$val['money'].'元红包,红包正在路上';
+			$val['content'] = '恭喜'.$val['nickname'].'领取'.$val['money'].'积分,积分正在路上';
 		}
 		unset($val);
 		// echo "<pre>";
@@ -390,7 +390,7 @@ class Member_WxShopPage extends MobilePage
 		}
 		$logs = pdo_fetch('select id,money,uid,status from ' . tablename('wx_shop_game_member_log') . ' where uniacid=:uniacid and uid=:uid and id=:id and status=2',array(':uniacid'=>$_W['uniacid'],':uid'=>$uid,':id'=>$logid));
 		if($logs['status']==3) {
-			show_json_w(-1,null,'红包已经领取,请勿重复领取!');
+			show_json_w(-1,null,'积分已经领取,请勿重复领取!');
 		}
 		$member = pdo_fetch('select credit_red from ' . tablename('wx_shop_member') . ' where id=:id and uniacid=:uniacid limit 1', array(':uniacid' => $_W['uniacid'], ':id' => $uid));
 		pdo_update('wx_shop_game_member_log',array('status'=>3),array('id'=>$logs['id']));
@@ -436,7 +436,7 @@ class Member_WxShopPage extends MobilePage
 			$apply = array();
 			$realmoney = $money - ($set['tx_sxf']/100 * $money);
 			
-			// m('member')->setCredit($_W['openid'], 'credit_red', -$money, array(0, $_W['shopset']['set'][''] . '红包余额提现预扣除: ' . $money . ',实际到账金额:' . $realmoney . ',手续费金额:' . $set['tx_sxf']));
+			// m('member')->setCredit($_W['openid'], 'credit_red', -$money, array(0, $_W['shopset']['set'][''] . '积分余额提现预扣除: ' . $money . ',实际到账金额:' . $realmoney . ',手续费金额:' . $set['tx_sxf']));
 				
 			// m('game')->setMoney();
 			pdo_update('wx_shop_member',array('credit_red'=>$credit['credit_red']-$money),array('id'=>$uid));
@@ -445,7 +445,7 @@ class Member_WxShopPage extends MobilePage
 			$apply['logno'] = $logno;
 			$apply['uid'] = $uid;
 			// $apply['openid'] = $member['openid'];
-			$apply['title'] = '红包余额提现';
+			$apply['title'] = '积分余额提现';
 			$apply['type'] = 1;
 			$apply['createtime'] = time();
 			$apply['status'] = 0;
